@@ -30,7 +30,8 @@
 
 # Tests & coverage
 /phpunit.result.cache
-/coverage/
+/build/coverage/
+/build/logs/
 /var/cache/test/
 /var/log/test.log
 
