@@ -61,6 +61,9 @@ jobs:
           php-version: '8.1'
           tools: composer
 
+      - name: Set DATABASE_URL
+        run: echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: composer install --prefer-dist
 
