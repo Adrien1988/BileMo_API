@@ -27,9 +27,12 @@ jobs:
           key: composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: composer-
 
+      - name: Provide DATABASE_URL
+        run: echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" >> $GITHUB_ENV
+
       # 4. Install deps
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer install --prefer-dist --no-progress
 
       # 5. PHPStan
       - name: Static analysis (PHPStan)
