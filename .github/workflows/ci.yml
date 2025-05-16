@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']        # toutes les branches
+  pull_request:              # et chaque PR
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout
+      - uses: actions/checkout@v4
+
+      # 2. PHP 8.1 + Xdebug (pour la couverture)
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          coverage: xdebug
+          tools: composer:v2
+
+      # 3. Cache Composer
+      - uses: actions/cache@v4
+        with:
+          path: ~/.composer/cache/files
+          key: composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: composer-
+
+      - name: Provide DATABASE_URL
+        run: echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" >> $GITHUB_ENV
+
+      # 4. Install deps
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      # 5. PHPStan
+      - name: Static analysis (PHPStan)
+        run: composer phpstan
+
+      # 6. PHPUnit + couverture Clover
+      - name: Run PHPUnit (with coverage)
+        run: vendor/bin/phpunit --configuration=phpunit.xml --coverage-clover build/logs/clover.xml
+
+      # 7. Upload couverture vers Codacy
+      - name: Upload coverage to Codacy
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: build/logs/clover.xml
