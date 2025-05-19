@@ -1,0 +1,42 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> Symfony standard additions ###
+# Node / Yarn / pnpm
+/node_modules/
+/assets/vendor/
+/pnpm-lock.yaml
+/yarn.lock
+/package-lock.json
+
+# Front build (encore, Webpack, Vite…)
+/public/build/
+/public/dist/
+/public/assets/
+
+# IDE & tooling
+/.idea/
+/.vscode/
+/*.iml
+/.phpstorm.meta.php
+
+# Tests & coverage
+/phpunit.result.cache
+/coverage/
+/var/cache/test/
+/var/log/test.log
+
+# Misc
+/.DS_Store
+Thumbs.db
+/npm-debug.log
+yarn-error.log
+###< Symfony standard additions ###
