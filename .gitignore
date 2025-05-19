@@ -30,7 +30,7 @@
 
 # Tests & coverage
 /phpunit.result.cache
-/coverage/
+/build/
 /var/cache/test/
 /var/log/test.log
 
@@ -40,3 +40,11 @@ Thumbs.db
 /npm-debug.log
 yarn-error.log
 ###< Symfony standard additions ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+
+###> phpunit/phpunit ###
+/.phpunit.cache/
+###< phpunit/phpunit ###

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    cacheDirectory=".phpunit.cache"
+    colors="true"
+    stopOnFailure="false"
+    processIsolation="true">
+
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <server name="APP_ENV" value="test" />
+        <server name="APP_DEBUG" value="1" />
+        <server name="APP_SECRET" value="test-secret" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
+    </php>
+
+    <!-- Suites de tests -->
+    <testsuites>
+        <testsuite name="default">
+            <directory suffix="Test.php">tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+
+    <!-- Couverture + rapport Clover -->
+    <coverage includeUncoveredFiles="true">
+        <report>
+            <text outputFile="php://stdout" />
+            <html outputDirectory="build/coverage" />
+            <clover outputFile="build/logs/clover.xml"/>
+        </report>
+    </coverage>
+
+    <extensions>
+        <bootstrap class="RobinIngelbrecht\PHPUnitCoverageTools\PhpUnitExtension">
+            <parameter name="exitOnLowCoverage" value="1" />
+        </bootstrap>
+    </extensions>
+</phpunit>
