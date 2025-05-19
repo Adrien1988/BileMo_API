@@ -26,6 +26,7 @@
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
     <rule ref="Squiz.Functions.FunctionDeclaration"/>
     <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+    <rule ref="Squiz.Arrays.ArrayDeclaration"/>
 
     <!-- Paths to scan -->
     <file>src/</file>
