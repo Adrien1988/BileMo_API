@@ -1,0 +1,6 @@
+@echo off
+echo Vérification du style avec PHP-CS-Fixer...
+php vendor/bin/php-cs-fixer fix --dry-run --diff
+
+echo Vérification du style avec PHP_CodeSniffer...
+php vendor/bin/phpcs

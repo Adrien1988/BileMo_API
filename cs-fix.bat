@@ -1,0 +1,6 @@
+@echo off
+echo Application des correctifs PHP-CS-Fixer...
+php vendor/bin/php-cs-fixer fix
+
+echo Application des correctifs PHP_CodeSniffer (phpcbf)...
+php vendor/bin/phpcbf
