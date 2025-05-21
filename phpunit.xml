@@ -13,6 +13,8 @@
         <server name="APP_DEBUG" value="1" />
         <server name="APP_SECRET" value="test-secret" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
+        <env name="KERNEL_CLASS" value="App\\Kernel" />
+        <server name="DATABASE_URL" value="mysql://root:@127.0.0.1:3306/bilemo_test?serverVersion=8.0"/>
     </php>
 
     <!-- Suites de tests -->
