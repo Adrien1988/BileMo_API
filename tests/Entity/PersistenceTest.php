@@ -2,11 +2,11 @@
 
 namespace App\Tests\Entity;
 
-use App\Kernel;
-use App\Entity\User;
 use App\Entity\Client;
-use App\Enum\UserRole;
 use App\Entity\Product;
+use App\Entity\User;
+use App\Enum\UserRole;
+use App\Kernel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -30,7 +30,7 @@ class PersistenceTest extends KernelTestCase
         self::bootKernel();
         $em = static::getContainer()->get('doctrine')->getManager();
 
-        $client = (new Client())->setName('ACME');
+        $client  = (new Client())->setName('ACME');
         $product = (new Product())
             ->setName('iPhone 15')
             ->setDescription('Apple flagship')
@@ -52,15 +52,15 @@ class PersistenceTest extends KernelTestCase
         $em->flush();
 
         $ids = [
-            'client'  => $client->getId(),
-            'product' => $product->getId(),
-            'user'    => $user->getId(),
-        ];
+                'client'  => $client->getId(),
+                'product' => $product->getId(),
+                'user'    => $user->getId(),
+               ];
         $em->clear();
 
-        $reloadedClient  = $em->find(Client::class,  $ids['client']);
+        $reloadedClient  = $em->find(Client::class, $ids['client']);
         $reloadedProduct = $em->find(Product::class, $ids['product']);
-        $reloadedUser    = $em->find(User::class,    $ids['user']);
+        $reloadedUser    = $em->find(User::class, $ids['user']);
 
         self::assertSame('ACME', $reloadedClient->getName());
         self::assertSame('iPhone 15', $reloadedProduct->getName());

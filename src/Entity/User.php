@@ -2,34 +2,31 @@
 
 namespace App\Entity;
 
-use App\Enum\UserRole;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Post;
-use Doctrine\DBAL\Types\Types;
-use ApiPlatform\Metadata\Delete;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use Symfony\Component\Serializer\Attribute\Groups;
+use ApiPlatform\Metadata\Post;
+use App\Enum\UserRole;
+use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Attribute\Groups;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`', uniqueConstraints: [
-    new ORM\UniqueConstraint(
-        name: 'uniq_email_per_client',
-        columns: ['client_id', 'email']
-    )
-])]
-#[UniqueEntity(fields: ['email', 'client'],
-    message: 'This email is already used for this client.')]
+##[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(
+    name: '`user`',
+    uniqueConstraints: [new ORM\UniqueConstraint(name: 'uniq_email_per_client', columns: ['client_id', 'email'])]
+)]
+#[UniqueEntity(fields: ['email', 'client'], message: 'This email is already used for this client.')]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
-        new Post(),
-        new Delete(),
-    ],
+                 new Get(),
+                 new GetCollection(),
+                 new Post(),
+                 new Delete(),
+                ],
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:write']]
 )]
@@ -94,6 +91,7 @@ class User
     public function setFirstName(string $firstName): static
     {
         $this->firstName = $firstName;
+
         return $this;
     }
 
@@ -105,6 +103,7 @@ class User
     public function setLastName(string $lastName): static
     {
         $this->lastName = $lastName;
+
         return $this;
     }
 
@@ -116,6 +115,7 @@ class User
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -127,6 +127,7 @@ class User
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -138,6 +139,7 @@ class User
     public function setRole(UserRole $role): static
     {
         $this->role = $role;
+
         return $this;
     }
 
@@ -149,6 +151,7 @@ class User
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
         return $this;
     }
 
@@ -165,6 +168,7 @@ class User
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
@@ -176,6 +180,7 @@ class User
     public function setClient(Client $client): static
     {
         $this->client = $client;
+
         return $this;
     }
 }

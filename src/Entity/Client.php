@@ -2,23 +2,23 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\ClientRepository;
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\GetCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[ORM\Table(name: 'client')]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
-    ],
+                 new Get(),
+                 new GetCollection(),
+                ],
     normalizationContext: ['groups' => ['client:read']],
     denormalizationContext: ['groups' => ['client:write']]
 )]
@@ -80,6 +80,7 @@ class Client
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
         return $this;
     }
 
@@ -96,6 +97,7 @@ class Client
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
@@ -111,6 +113,7 @@ class Client
             $this->users->add($user);
             $user->setClient($this);
         }
+
         return $this;
     }
 
@@ -119,6 +122,7 @@ class Client
         if ($this->users->removeElement($user)) {
             // rien d’autre : orphanRemoval fera le boulot
         }
+
         return $this;
     }
 }
