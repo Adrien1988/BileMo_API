@@ -12,22 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PersistenceTest extends KernelTestCase
 {
-    private EntityManagerInterface $em;
-
     protected static function getKernelClass(): string
     {
         return Kernel::class;
     }
 
-    protected function setUp(): void
-    {
-        self::bootKernel();
-        $this->em = static::getContainer()->get('doctrine')->getManager();
-    }
-
     public function testPersistAndReload(): void
     {
         self::bootKernel();
+        /** @var EntityManagerInterface $em */
         $em = static::getContainer()->get('doctrine')->getManager();
 
         $client  = (new Client())->setName('ACME');
