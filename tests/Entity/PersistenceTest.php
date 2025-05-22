@@ -15,10 +15,12 @@ class PersistenceTest extends KernelTestCase
 {
     private static EntityManagerInterface $em;
 
+
     protected static function getKernelClass(): string
     {
         return Kernel::class;
     }
+
 
     /** crée/détruit le schéma une seule fois pour toute la classe */
     public static function setUpBeforeClass(): void
@@ -26,7 +28,7 @@ class PersistenceTest extends KernelTestCase
         self::bootKernel();
         self::$em = self::getContainer()->get('doctrine')->getManager();
 
-        $tool     = new SchemaTool(self::$em);
+        $tool = new SchemaTool(self::$em);
         $metadata = self::$em->getMetadataFactory()->getAllMetadata();
 
         // wipe & build
@@ -34,15 +36,17 @@ class PersistenceTest extends KernelTestCase
         $tool->createSchema($metadata);
     }
 
+
     public static function tearDownAfterClass(): void
     {
         self::$em->getConnection()->close();
         self::ensureKernelShutdown();
     }
 
+
     public function testPersistAndReload(): void
     {
-        $client  = (new Client())->setName('ACME');
+        $client = (new Client())->setName('ACME');
         $product = (new Product())
             ->setName('iPhone 15')
             ->setDescription('Apple flagship')
@@ -64,19 +68,21 @@ class PersistenceTest extends KernelTestCase
         self::$em->flush();
 
         $ids = [
-                'client'  => $client->getId(),
-                'product' => $product->getId(),
-                'user'    => $user->getId(),
-               ];
+            'client'  => $client->getId(),
+            'product' => $product->getId(),
+            'user'    => $user->getId(),
+        ];
         self::$em->clear();
 
-        $reloadedClient  = self::$em->find(Client::class, $ids['client']);
+        $reloadedClient = self::$em->find(Client::class, $ids['client']);
         $reloadedProduct = self::$em->find(Product::class, $ids['product']);
-        $reloadedUser    = self::$em->find(User::class, $ids['user']);
+        $reloadedUser = self::$em->find(User::class, $ids['user']);
 
         self::assertSame('ACME', $reloadedClient->getName());
         self::assertSame('iPhone 15', $reloadedProduct->getName());
         self::assertSame('john@acme.com', $reloadedUser->getEmail());
         self::assertSame($reloadedClient, $reloadedUser->getClient());
     }
+
+
 }

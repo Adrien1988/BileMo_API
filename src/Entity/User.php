@@ -22,11 +22,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[UniqueEntity(fields: ['email', 'client'], message: 'This email is already used for this client.')]
 #[ApiResource(
     operations: [
-                 new Get(),
-                 new GetCollection(),
-                 new Post(),
-                 new Delete(),
-                ],
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Delete(),
+    ],
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:write']]
 )]
@@ -73,20 +73,24 @@ class User
     #[Groups(['user:read', 'user:write'])]
     private Client $client;
 
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
     }
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+
     public function getFirstName(): string
     {
         return $this->firstName;
     }
+
 
     public function setFirstName(string $firstName): static
     {
@@ -95,10 +99,12 @@ class User
         return $this;
     }
 
+
     public function getLastName(): string
     {
         return $this->lastName;
     }
+
 
     public function setLastName(string $lastName): static
     {
@@ -107,10 +113,12 @@ class User
         return $this;
     }
 
+
     public function getEmail(): string
     {
         return $this->email;
     }
+
 
     public function setEmail(string $email): static
     {
@@ -119,10 +127,12 @@ class User
         return $this;
     }
 
+
     public function getPassword(): string
     {
         return $this->password;
     }
+
 
     public function setPassword(string $password): static
     {
@@ -131,10 +141,12 @@ class User
         return $this;
     }
 
+
     public function getRole(): UserRole
     {
         return $this->role;
     }
+
 
     public function setRole(UserRole $role): static
     {
@@ -143,10 +155,12 @@ class User
         return $this;
     }
 
+
     public function isActive(): bool
     {
         return $this->isActive;
     }
+
 
     public function setIsActive(bool $isActive): static
     {
@@ -155,15 +169,18 @@ class User
         return $this;
     }
 
+
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
+
 
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
@@ -172,10 +189,12 @@ class User
         return $this;
     }
 
+
     public function getClient(): Client
     {
         return $this->client;
     }
+
 
     public function setClient(Client $client): static
     {
@@ -183,4 +202,6 @@ class User
 
         return $this;
     }
+
+
 }

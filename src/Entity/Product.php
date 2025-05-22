@@ -14,9 +14,9 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Table(name: 'product')]
 #[ApiResource(
     operations: [
-                 new Get(),
-                 new GetCollection(),
-                ],
+        new Get(),
+        new GetCollection(),
+    ],
     normalizationContext: ['groups' => ['product:read']],
     denormalizationContext: ['groups' => ['product:write']]
 )]
@@ -46,15 +46,18 @@ class Product
     #[Groups(['product:read', 'product:write'])]
     private string $imageUrl;
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+
     public function getName(): string
     {
         return $this->name;
     }
+
 
     public function setName(string $name): static
     {
@@ -63,10 +66,12 @@ class Product
         return $this;
     }
 
+
     public function getDescription(): string
     {
         return $this->description;
     }
+
 
     public function setDescription(string $description): static
     {
@@ -75,10 +80,12 @@ class Product
         return $this;
     }
 
+
     public function getPrice(): string
     {
         return $this->price;
     }
+
 
     public function setPrice(string $price): static
     {
@@ -87,10 +94,12 @@ class Product
         return $this;
     }
 
+
     public function getBrand(): string
     {
         return $this->brand;
     }
+
 
     public function setBrand(string $brand): static
     {
@@ -99,10 +108,12 @@ class Product
         return $this;
     }
 
+
     public function getImageUrl(): string
     {
         return $this->imageUrl;
     }
+
 
     public function setImageUrl(string $imageUrl): static
     {
@@ -110,4 +121,6 @@ class Product
 
         return $this;
     }
+
+
 }

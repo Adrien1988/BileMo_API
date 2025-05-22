@@ -11,10 +11,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
+
 
     //    /**
     //     * @return User[] Returns an array of User objects
