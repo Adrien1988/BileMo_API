@@ -24,7 +24,6 @@ class PersistenceTest extends KernelTestCase
     public static function setUpBeforeClass(): void
     {
         self::bootKernel();
-        /** @var EntityManagerInterface $em */
         self::$em = self::getContainer()->get('doctrine')->getManager();
 
         $tool     = new SchemaTool(self::$em);
