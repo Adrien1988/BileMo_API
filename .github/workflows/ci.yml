@@ -3,17 +3,22 @@ name: CI
 on:
   push:
     branches: ['**']        # toutes les branches
-  pull_request:              # et chaque PR
+  pull_request:
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
+    # 👉  les variables d’env. sont visibles par TOUTES les étapes du job
+    env:
+      APP_ENV: test
+      JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
+
     steps:
       # 1. Checkout
       - uses: actions/checkout@v4
 
-      # 2. PHP 8.1 + Xdebug (pour la couverture)
+      # 2. PHP 8.1 + Xdebug (couverture)
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
@@ -27,12 +32,17 @@ jobs:
           key: composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: composer-
 
+      # 3 bis. URL SQLite pour Symfony
       - name: Provide DATABASE_URL
         run: echo "DATABASE_URL=sqlite:///%kernel.project_dir%/var/data.db" >> $GITHUB_ENV
 
-      # 4. Install deps
+      # 4. Dépendances
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
+
+      # 👉 4 bis. (facultatif) Regénérer les clés JWT dans le runner
+      - name: Generate / overwrite JWT keys
+        run: php bin/console lexik:jwt:generate-keypair --overwrite -n
 
       # 5. PHPStan
       - name: Static analysis (PHPStan)
@@ -52,6 +62,9 @@ jobs:
   code-style:
     name: Code Style Check
     runs-on: ubuntu-latest
+
+    env:                     # 🔸 pas indispensable, mais évite les « passphrase » manquantes
+      JWT_PASSPHRASE: ${{ secrets.JWT_PASSPHRASE }}
 
     steps:
       - uses: actions/checkout@v4

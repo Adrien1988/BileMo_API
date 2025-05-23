@@ -61,3 +61,8 @@ phpstan.neon
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+/config/jwt_test/*.pem
+###< lexik/jwt-authentication-bundle ###

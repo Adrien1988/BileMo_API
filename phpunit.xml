@@ -12,9 +12,15 @@
         <server name="APP_ENV" value="test" />
         <server name="APP_DEBUG" value="1" />
         <server name="APP_SECRET" value="test-secret" />
+
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak" />
-        <env name="KERNEL_CLASS" value="App\\Kernel" />
-        <server name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/test.db"/>
+        <env name="KERNEL_CLASS" value="App\Kernel" />
+
+        <env name="JWT_PASSPHRASE" value="" />
+        <env name="JWT_SECRET_KEY" value="%kernel.project_dir%/config/jwt_test/private.pem" />
+        <env name="JWT_PUBLIC_KEY" value="%kernel.project_dir%/config/jwt_test/public.pem" />
+        <env name="CORS_ALLOW_ORIGIN" value="*" />
+        <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/test.db" />
     </php>
 
     <!-- Suites de tests -->
@@ -35,7 +41,7 @@
         <report>
             <text outputFile="php://stdout" />
             <html outputDirectory="build/coverage" />
-            <clover outputFile="build/logs/clover.xml"/>
+            <clover outputFile="build/logs/clover.xml" />
         </report>
     </coverage>
 

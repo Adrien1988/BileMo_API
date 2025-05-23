@@ -1,17 +1,32 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\User: auto
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            lazy: true
-            provider: users_in_memory
+        login:
+            pattern:  ^/api/login_check$
+            stateless: true
+            provider: app_user_provider
+            json_login:
+                check_path:    /api/login_check   # URL de POST
+                username_path: email              # Clé JSON contenant l’identifiant
+                password_path: password           # Clé JSON contenant le mot de passe
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        api:
+            pattern:   ^/api
+            stateless: true
+            provider:  app_user_provider
+            jwt: ~
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -22,8 +37,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # 1. Swagger UI et documentation -> PUBLIC
+        - { path: ^/api($|/docs(\.json(ld)?|\.json)?$), roles: PUBLIC_ACCESS }
+        # L’endpoint de login doit rester public
+        - { path: ^/api/login_check$, roles: PUBLIC_ACCESS }
+        # Tout le reste de l’API requiert un token valide
+        - { path: ^/api,            roles: IS_AUTHENTICATED_FULLY }
+        # Exemple : protéger un futur back-office
+        # - { path: ^/admin,         roles: ROLE_ADMIN }
 
 when@test:
     security:
@@ -32,8 +53,8 @@ when@test:
             # important to generate secure password hashes. In tests however, secure hashes
             # are not important, waste resources and increase test times. The following
             # reduces the work factor to the lowest possible values.
-            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+            App\Entity\User:
                 algorithm: auto
-                cost: 4 # Lowest possible value for bcrypt
-                time_cost: 3 # Lowest possible value for argon
-                memory_cost: 10 # Lowest possible value for argon
+                cost: 4          # plus rapide pour bcrypt
+                time_cost: 3     # plus rapide pour argon
+                memory_cost: 10  # plus rapide pour argon

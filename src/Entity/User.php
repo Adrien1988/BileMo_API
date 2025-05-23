@@ -12,6 +12,8 @@ use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -30,7 +32,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:write']]
 )]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id, ORM\GeneratedValue, ORM\Column]
     #[Groups(['user:read'])]
@@ -156,6 +158,13 @@ class User
     }
 
 
+    public function getRoles(): array
+    {
+        // On tire profit de ta méthode existante
+        return [$this->getRole()->value];
+    }
+
+
     public function isActive(): bool
     {
         return $this->isActive;
@@ -201,6 +210,18 @@ class User
         $this->client = $client;
 
         return $this;
+    }
+
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+
+    public function eraseCredentials(): void
+    {
+        // Laisse vide si tu n’as pas de données sensibles temporaires
     }
 
 
