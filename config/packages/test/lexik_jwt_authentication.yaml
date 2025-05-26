@@ -1,0 +1,5 @@
+# config/packages/test/lexik_jwt_authentication.yaml
+lexik_jwt_authentication:
+    secret_key: '%kernel.project_dir%/config/jwt_test/private.pem'
+    public_key: '%kernel.project_dir%/config/jwt_test/public.pem'
+    pass_phrase: ''          # ← vide

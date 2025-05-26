@@ -1,0 +1,4 @@
+# config/routes/lexik_jwt.yaml  (crée-le si besoin)
+authentication_token:
+  path: /api/login_check        # mets le nom que tu veux
+  methods: [POST]
