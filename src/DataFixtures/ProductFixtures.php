@@ -20,7 +20,7 @@ final class ProductFixtures extends Fixture
             (new Product())
                 ->setName('BileMo X1')
                 ->setDescription('Smartphone haut de gamme, écran OLED 6,5’')
-                ->setPrice('899.00')           // string decimal (scale = 2)
+                ->setPrice('899.00')                               // string
                 ->setBrand('BileMo')
                 ->setImageUrl('https://picsum.photos/seed/bilemo-x1/640/480')
         );
@@ -31,7 +31,10 @@ final class ProductFixtures extends Fixture
                 (new Product())
                     ->setName($faker->unique()->words(3, true))
                     ->setDescription($faker->sentence(12))
-                    ->setPrice($faker->randomFloat(2, 199, 1299))
+                    ->setPrice(
+                        // PHPStan veut un string, on convertit proprement
+                        number_format($faker->randomFloat(2, 199, 1299), 2, '.', '')
+                    )
                     ->setBrand($faker->company())
                     ->setImageUrl($faker->imageUrl(640, 480, 'technics', true))
             );

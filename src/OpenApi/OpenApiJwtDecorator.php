@@ -5,8 +5,11 @@ namespace App\OpenApi;
 use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\OpenApi\Model\SecurityScheme;
 use ApiPlatform\OpenApi\OpenApi;
-use ArrayObject;
 
+/**
+ * Ajoute un schéma « JWT » (bearer) à la doc OpenAPI
+ * et le rend obligatoire pour toutes les routes.
+ */
 final class OpenApiJwtDecorator implements OpenApiFactoryInterface
 {
 
@@ -17,32 +20,26 @@ final class OpenApiJwtDecorator implements OpenApiFactoryInterface
     }
 
 
+    /** @param array<string, mixed> $context */
     public function __invoke(array $context = []): OpenApi
     {
         $openApi = ($this->decorated)($context);
-
-        /* 1. On récupère les components existants */
         $components = $openApi->getComponents();
-        $securitySchemes = $components->getSecuritySchemes();
 
-        // getSecuritySchemes() peut retourner null → on force en ArrayObject vide
-        if (!$securitySchemes instanceof \ArrayObject) {
-            $securitySchemes = new \ArrayObject($securitySchemes ?? []);
-        }
+        /** @var \ArrayObject<string,SecurityScheme> $securitySchemes */
+        $securitySchemes = $components->getSecuritySchemes() ?? new \ArrayObject();
 
-        /* 2. On ajoute notre schéma JWT */
+        // Ajout / mise-à-jour du schéma JWT
         $securitySchemes['JWT'] = new SecurityScheme(
             type: 'http',
             scheme: 'bearer',
             bearerFormat: 'JWT',
         );
 
-        /* 3. On ré-injecte les components mis à jour */
+        // Ré-injection
         $components = $components->withSecuritySchemes($securitySchemes);
-        $openApi = $openApi->withComponents($components);
-
-        /* 4. (facultatif) On rend JWT obligatoire partout */
-        $openApi = $openApi->withSecurity([['JWT' => []]]);
+        $openApi = $openApi->withComponents($components)
+                              ->withSecurity([['JWT' => []]]);
 
         return $openApi;
     }
