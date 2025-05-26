@@ -2,20 +2,22 @@
 
 namespace App\Tests\Authentication;
 
-use App\Entity\User;
-use App\DataFixtures\UserFixtures;
-use Doctrine\ORM\Tools\SchemaTool;
+use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\DataFixtures\ClientFixtures;
 use App\DataFixtures\ProductFixtures;
-use Doctrine\Common\DataFixtures\Loader;
-use Doctrine\ORM\EntityManagerInterface;
-use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use App\DataFixtures\UserFixtures;
+use App\Entity\User;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 final class JwtAuthenticationTest extends ApiTestCase
 {
+
+
     /**
      * (Ré)-initialise la base de test et charge les fixtures.
      */
@@ -28,7 +30,7 @@ final class JwtAuthenticationTest extends ApiTestCase
 
         /* --- 1. (Re)création du schéma ------------------------------- */
         $schemaTool = new SchemaTool($em);
-        $metadata   = $em->getMetadataFactory()->getAllMetadata();
+        $metadata = $em->getMetadataFactory()->getAllMetadata();
 
         // On repart d’une base propre
         $schemaTool->dropSchema($metadata);
@@ -44,6 +46,7 @@ final class JwtAuthenticationTest extends ApiTestCase
         $executor->execute($loader->getFixtures());
     }
 
+
     public function test401WithoutToken(): void
     {
         static::createClient(['debug' => false])
@@ -51,6 +54,7 @@ final class JwtAuthenticationTest extends ApiTestCase
 
         self::assertResponseStatusCodeSame(401);
     }
+
 
     public function test200WithValidToken(): void
     {
@@ -81,4 +85,6 @@ final class JwtAuthenticationTest extends ApiTestCase
 
         self::assertResponseIsSuccessful(); // 200
     }
+
+
 }
