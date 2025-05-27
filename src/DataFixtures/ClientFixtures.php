@@ -19,14 +19,14 @@ final class ClientFixtures extends Fixture
         $this->faker = $faker;
     }
 
-    
+
     /**
      * Loads client fixtures into the database.
      *
      * This method uses Faker to generate fake data and persists it into the database.
      * It is called automatically by the Doctrine fixtures loader.
      *
-     * @param ObjectManager $manager The object manager for persisting entities.
+     * @param ObjectManager $manager The object manager for persisting entities
      *
      * @return void
      */
