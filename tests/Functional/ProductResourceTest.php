@@ -26,6 +26,7 @@ class ProductResourceTest extends ApiTestCase
 
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());
+
     }
 
 
@@ -36,6 +37,7 @@ class ProductResourceTest extends ApiTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertCount(30, $response->toArray()['hydra:member']);
+
     }
 
 
@@ -46,6 +48,7 @@ class ProductResourceTest extends ApiTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertCount(5, $response->toArray()['hydra:member']);
+
     }
 
 
@@ -60,6 +63,7 @@ class ProductResourceTest extends ApiTestCase
         sort($sorted, SORT_NATURAL | SORT_FLAG_CASE);
 
         $this->assertSame($sorted, $names);
+
     }
 
 
@@ -74,6 +78,7 @@ class ProductResourceTest extends ApiTestCase
         rsort($sorted, SORT_NUMERIC);
 
         $this->assertSame($sorted, $prices);
+
     }
 
 

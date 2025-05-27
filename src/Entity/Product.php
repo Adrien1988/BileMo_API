@@ -57,12 +57,14 @@ class Product
     public function getId(): ?int
     {
         return $this->id;
+
     }
 
 
     public function getName(): string
     {
         return $this->name;
+
     }
 
 
@@ -71,12 +73,14 @@ class Product
         $this->name = $name;
 
         return $this;
+
     }
 
 
     public function getDescription(): string
     {
         return $this->description;
+
     }
 
 
@@ -85,12 +89,14 @@ class Product
         $this->description = $description;
 
         return $this;
+
     }
 
 
     public function getPrice(): string
     {
         return $this->price;
+
     }
 
 
@@ -99,12 +105,14 @@ class Product
         $this->price = $price;
 
         return $this;
+
     }
 
 
     public function getBrand(): string
     {
         return $this->brand;
+
     }
 
 
@@ -113,12 +121,14 @@ class Product
         $this->brand = $brand;
 
         return $this;
+
     }
 
 
     public function getImageUrl(): string
     {
         return $this->imageUrl;
+
     }
 
 
@@ -127,6 +137,7 @@ class Product
         $this->imageUrl = $imageUrl;
 
         return $this;
+
     }
 
 

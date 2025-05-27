@@ -56,6 +56,7 @@ trait JwtAuthenticatedClientTrait
 
         // Crée et retourne le client HTTP avec le header Authorization: Bearer …
         return static::createClient([], ['auth_bearer' => $token]);
+
     }
 
 

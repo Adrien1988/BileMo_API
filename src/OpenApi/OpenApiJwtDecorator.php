@@ -17,6 +17,7 @@ final class OpenApiJwtDecorator implements OpenApiFactoryInterface
     public function __construct(
         private OpenApiFactoryInterface $decorated,
     ) {
+
     }
 
 
@@ -42,6 +43,7 @@ final class OpenApiJwtDecorator implements OpenApiFactoryInterface
                               ->withSecurity([['JWT' => []]]);
 
         return $openApi;
+
     }
 
 

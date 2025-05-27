@@ -40,6 +40,7 @@ final class OpenApiJwtDecoratorTest extends TestCase
 
         // Vérification
         self::assertArrayHasKey('JWT', $openApi->getComponents()->getSecuritySchemes());
+
     }
 
 

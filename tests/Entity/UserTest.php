@@ -44,6 +44,7 @@ class UserTest extends TestCase
         $now = new \DateTimeImmutable();
         $user->setUpdatedAt($now);
         self::assertSame($now, $user->getUpdatedAt());
+
     }
 
 

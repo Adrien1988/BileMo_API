@@ -50,6 +50,7 @@ class ClientTest extends TestCase
         // removeUser détache correctement
         $client->removeUser($user);
         self::assertCount(0, $client->getUsers());
+
     }
 
 

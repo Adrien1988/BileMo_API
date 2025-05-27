@@ -44,6 +44,7 @@ final class JwtAuthenticationTest extends ApiTestCase
 
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());
+
     }
 
 
@@ -53,6 +54,7 @@ final class JwtAuthenticationTest extends ApiTestCase
             ->request('GET', '/api/products');
 
         self::assertResponseStatusCodeSame(401);
+
     }
 
 
@@ -84,6 +86,7 @@ final class JwtAuthenticationTest extends ApiTestCase
         );
 
         self::assertResponseIsSuccessful(); // 200
+
     }
 
 
