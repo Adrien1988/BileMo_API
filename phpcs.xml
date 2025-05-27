@@ -85,11 +85,6 @@
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
     <rule ref="Squiz.WhiteSpace.FunctionSpacing" />
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
-    <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace">
-        <properties>
-            <property name="requiredLinesBeforeClosingBrace" value="1"/>
-        </properties>
-    </rule>
 
 
 
