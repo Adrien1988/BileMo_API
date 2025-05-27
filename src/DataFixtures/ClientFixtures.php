@@ -16,14 +16,12 @@ final class ClientFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        /* ---------- Client principal (pour les tests) ---------------- */
         $main = (new Client())
             ->setName('Acme Corp');
 
         $manager->persist($main);
         $this->addReference(self::REF_PRIMARY_CLIENT, $main);
 
-        /* ---------- Quelques autres clients aléatoires (optionnel) --- */
         for ($i = 0; $i < 3; ++$i) {
             $manager->persist(
                 (new Client())
