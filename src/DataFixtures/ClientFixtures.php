@@ -5,34 +5,16 @@ namespace App\DataFixtures;
 use App\Entity\Client;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory as FakerFactory;
+use Faker\Factory;
 
 final class ClientFixtures extends Fixture
 {
     public const REF_PRIMARY_CLIENT = 'primary-client';
 
-    private FakerFactory $faker;
 
-
-    public function __construct(FakerFactory $faker)
-    {
-        $this->faker = $faker;
-    }
-
-
-    /**
-     * Loads client fixtures into the database.
-     *
-     * This method uses Faker to generate fake data and persists it into the database.
-     * It is called automatically by the Doctrine fixtures loader.
-     *
-     * @param ObjectManager $manager The object manager for persisting entities
-     *
-     * @return void
-     */
     public function load(ObjectManager $manager): void
     {
-        $faker = $this->faker->create('fr_FR');
+        $faker = Factory::create('fr_FR');
 
         $main = (new Client())
             ->setName('Acme Corp');
@@ -48,7 +30,6 @@ final class ClientFixtures extends Fixture
         }
 
         $manager->flush();
-
     }
 
 
