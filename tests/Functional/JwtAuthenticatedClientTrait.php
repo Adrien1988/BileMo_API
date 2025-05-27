@@ -4,8 +4,8 @@
 
 namespace App\Tests\Functional;
 
-use ApiPlatform\Symfony\Bundle\Test\Client as ApiTestClient;   // client HTTP de test
-use App\Entity\Client as BusinessClient;                      // entité Doctrine
+use ApiPlatform\Symfony\Bundle\Test\Client as ApiTestClient;
+use App\Entity\Client as BusinessClient;
 use App\Entity\User;
 use App\Repository\ClientRepository;
 use App\Repository\UserRepository;
@@ -32,16 +32,16 @@ trait JwtAuthenticatedClientTrait
 
             /** @var ClientRepository $clientRepo */
             $clientRepo = $container->get(ClientRepository::class);
-            $business = $clientRepo->findOneBy([]);        // récupère un client existant
+            $business = $clientRepo->findOneBy([]);
 
-            if (!$business) {                               // sinon en crée un
+            if (!$business) {
                 $business = (new BusinessClient())->setName('Test-Client');
                 $em->persist($business);
             }
 
             $user = (new User())
                 ->setEmail('api@example.com')
-                ->setPassword('dummy')        // pas utilisé ici
+                ->setPassword('dummy')
                 ->setFirstName('API')
                 ->setLastName('User')
                 ->setClient($business);
