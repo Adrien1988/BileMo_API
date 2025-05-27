@@ -10,6 +10,7 @@ return (new PhpCsFixer\Config())
         '@Symfony' => true,
         '@PSR12' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'array_indentation' => true,
         'binary_operator_spaces' => [
             'operators' => ['=>' => 'align_single_space', '=' => 'single_space'],
         ],
@@ -35,6 +36,5 @@ return (new PhpCsFixer\Config())
         'align_multiline_comment' => true,
         'method_argument_space' => ['on_multiline' => 'ignore'],
         'no_blank_lines_after_class_opening' => false,
-        'align_multidimensional_arrays' => true,
     ])
     ->setFinder($finder);
