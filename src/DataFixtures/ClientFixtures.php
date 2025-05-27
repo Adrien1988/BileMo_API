@@ -10,7 +10,7 @@ use Faker\Factory;
 final class ClientFixtures extends Fixture
 {
     public const REF_PRIMARY_CLIENT = 'primary-client';
-    
+
     private Factory $faker;
 
 
