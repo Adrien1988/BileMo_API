@@ -18,7 +18,8 @@ class ProductResourceTest extends ApiTestCase
     public static function setUpBeforeClass(): void
     {
         self::bootKernel();
-        /** @var EntityManagerInterface $em */
+        // @var EntityManagerInterface $em
+
         $em = self::getContainer()->get(EntityManagerInterface::class);
 
         $loader = new Loader();

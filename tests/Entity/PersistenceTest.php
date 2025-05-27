@@ -32,7 +32,6 @@ class PersistenceTest extends KernelTestCase
         $tool = new SchemaTool(self::$em);
         $metadata = self::$em->getMetadataFactory()->getAllMetadata();
 
-        // wipe & build
         $tool->dropSchema($metadata);
         $tool->createSchema($metadata);
 

@@ -90,9 +90,7 @@
 
 
 
-    <rule ref="Squiz.Commenting.BlockComment">
-        <severity>0</severity>
-    </rule>
+    <rule ref="Squiz.Commenting.BlockComment" />
     <rule ref="Squiz.Commenting.DocCommentAlignment" />
 
     <!-- Désactivation de règles conflictuelles -->

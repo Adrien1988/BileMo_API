@@ -16,21 +16,16 @@ trait JwtAuthenticatedClientTrait
 {
 
 
-    /** Retourne un client HTTP déjà authentifié avec un JWT */
     private function createAuthenticatedClient(): ApiTestClient
     {
         $container = static::getContainer();
 
-        /** @var UserRepository $userRepo */
         $userRepo = $container->get(UserRepository::class);
         $user = $userRepo->findOneBy(['email' => 'api@example.com']);
 
-        // Si l’utilisateur n’existe pas encore (DB vide), on le crée avec un client rattaché
         if (!$user) {
-            /** @var EntityManagerInterface $em */
             $em = $container->get(EntityManagerInterface::class);
 
-            /** @var ClientRepository $clientRepo */
             $clientRepo = $container->get(ClientRepository::class);
             $business = $clientRepo->findOneBy([]);
 
@@ -50,11 +45,9 @@ trait JwtAuthenticatedClientTrait
             $em->flush();
         }
 
-        /** @var JWTTokenManagerInterface $jwt */
         $jwt = $container->get(JWTTokenManagerInterface::class);
         $token = $jwt->create($user);
 
-        // Crée et retourne le client HTTP avec le header Authorization: Bearer …
         return static::createClient([], ['auth_bearer' => $token]);
 
     }

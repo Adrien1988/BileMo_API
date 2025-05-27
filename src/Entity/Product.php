@@ -24,8 +24,13 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 #[ApiFilter(
     OrderFilter::class,
-    properties: ['name', 'price'],
-    arguments: ['orderParameterName' => 'order']
+    properties: [
+        'name',
+        'price',
+    ],
+    arguments: [
+        'orderParameterName' => 'order',
+    ]
 )]
 class Product
 {

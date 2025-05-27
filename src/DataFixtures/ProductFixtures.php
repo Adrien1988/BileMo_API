@@ -29,7 +29,6 @@ final class ProductFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        // Produit vitrine
         $manager->persist(
             (new Product())
                 ->setName('BileMo X1')
@@ -39,15 +38,11 @@ final class ProductFixtures extends Fixture
                 ->setImageUrl('https://picsum.photos/seed/bilemo-x1/640/480')
         );
 
-        // Smartphones aléatoires
         for ($i = 0; $i < self::EXTRA_PRODUCTS; ++$i) {
-            // 1) tire une marque au hasard
             $brand = $faker->randomKey(self::PHONES);
 
-            // 2) puis un modèle dans la liste associée
             $model = $faker->randomElement(self::PHONES[$brand]);
 
-            // 3) éventuellement ajoute un suffixe « 5G » / « Pro » / etc.
             if ($faker->boolean(30) && !str_contains($model, 'Pro')) {
                 $model .= ' '.$faker->randomElement(['5G', 'Pro', 'Ultra']);
             }
