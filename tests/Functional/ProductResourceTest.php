@@ -61,7 +61,7 @@ class ProductResourceTest extends ApiTestCase
 
         $names = array_column($data, 'name');
         $sorted = $names;
-        sort($sorted, SORT_NATURAL | SORT_FLAG_CASE);
+        sort($sorted, (SORT_NATURAL | SORT_FLAG_CASE));
 
         $this->assertSame($sorted, $names);
 

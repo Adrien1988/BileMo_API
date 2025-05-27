@@ -23,7 +23,7 @@ final class OpenApiJwtDecorator implements OpenApiFactoryInterface
         $openApi = ($this->decorated)($context);
         $components = $openApi->getComponents();
 
-        $securitySchemes = $components->getSecuritySchemes() ?? new \ArrayObject();
+        $securitySchemes = ($components->getSecuritySchemes() ?? new \ArrayObject());
 
         $securitySchemes['JWT'] = new SecurityScheme(
             type: 'http',
