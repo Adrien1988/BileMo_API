@@ -5,16 +5,16 @@ namespace App\DataFixtures;
 use App\Entity\Client;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
+use Faker\Factory as FakerFactory;
 
 final class ClientFixtures extends Fixture
 {
     public const REF_PRIMARY_CLIENT = 'primary-client';
 
-    private Factory $faker;
+    private FakerFactory $faker;
 
 
-    public function __construct(Factory $faker)
+    public function __construct(FakerFactory $faker)
     {
         $this->faker = $faker;
     }
