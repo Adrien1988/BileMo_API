@@ -35,5 +35,6 @@ return (new PhpCsFixer\Config())
         'align_multiline_comment' => true,
         'method_argument_space' => ['on_multiline' => 'ignore'],
         'no_blank_lines_after_class_opening' => false,
+        'align_multidimensional_arrays' => true,
     ])
     ->setFinder($finder);
