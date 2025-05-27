@@ -25,7 +25,7 @@ services:
         arguments: [ '@.inner' ]
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    Faker\Factory: '@fakerphp/faker'
-    App\DataFixtures\ClientFixtures:
+    Faker\Factory:
+        factory: ['Faker\Factory', 'create']
         arguments:
-            $faker: '@Faker\Factory'
+            $locale: 'fr_FR'
