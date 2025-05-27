@@ -15,6 +15,7 @@ return (new PhpCsFixer\Config())
         ],
         'blank_line_after_namespace' => true,
         'blank_line_after_opening_tag' => true,
+        'blank_line_before_return' => true,
         'class_attributes_separation' => false,
         'no_unused_imports' => true,
         'ordered_imports' => ['sort_algorithm' => 'alpha'],
