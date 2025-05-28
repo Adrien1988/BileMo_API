@@ -51,8 +51,9 @@
         <severity>0</severity>
     </rule>
     <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
-        <severity>0</severity>
+        
     </rule>
+    <rule ref="Squiz.Formatting.OperatorBracket"/>
 
     <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
@@ -85,10 +86,12 @@
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
     <rule ref="Squiz.WhiteSpace.FunctionSpacing" />
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
+    <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace" />
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
 
-    <rule ref="Squiz.Commenting.BlockComment">
-        <severity>0</severity>
-    </rule>
+
+
+    <rule ref="Squiz.Commenting.BlockComment" />
     <rule ref="Squiz.Commenting.DocCommentAlignment" />
 
     <!-- Désactivation de règles conflictuelles -->

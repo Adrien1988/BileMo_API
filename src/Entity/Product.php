@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
@@ -19,6 +21,16 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ],
     normalizationContext: ['groups' => ['product:read']],
     denormalizationContext: ['groups' => ['product:write']]
+)]
+#[ApiFilter(
+    OrderFilter::class,
+    properties: [
+        'name',
+        'price',
+    ],
+    arguments: [
+        'orderParameterName' => 'order',
+    ]
 )]
 class Product
 {
@@ -50,12 +62,14 @@ class Product
     public function getId(): ?int
     {
         return $this->id;
+
     }
 
 
     public function getName(): string
     {
         return $this->name;
+
     }
 
 
@@ -64,12 +78,14 @@ class Product
         $this->name = $name;
 
         return $this;
+
     }
 
 
     public function getDescription(): string
     {
         return $this->description;
+
     }
 
 
@@ -78,12 +94,14 @@ class Product
         $this->description = $description;
 
         return $this;
+
     }
 
 
     public function getPrice(): string
     {
         return $this->price;
+
     }
 
 
@@ -92,12 +110,14 @@ class Product
         $this->price = $price;
 
         return $this;
+
     }
 
 
     public function getBrand(): string
     {
         return $this->brand;
+
     }
 
 
@@ -106,12 +126,14 @@ class Product
         $this->brand = $brand;
 
         return $this;
+
     }
 
 
     public function getImageUrl(): string
     {
         return $this->imageUrl;
+
     }
 
 
@@ -120,6 +142,7 @@ class Product
         $this->imageUrl = $imageUrl;
 
         return $this;
+
     }
 
 

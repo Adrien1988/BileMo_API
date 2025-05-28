@@ -16,7 +16,6 @@ final class OpenApiJwtDecoratorTest extends TestCase
 
     public function testAddsJwtScheme(): void
     {
-        // Fabrique factice minimale
         $dummyFactory = new class () implements OpenApiFactoryInterface {
 
 
@@ -34,12 +33,11 @@ final class OpenApiJwtDecoratorTest extends TestCase
 
         };
 
-        // Décoration
         $decorator = new OpenApiJwtDecorator($dummyFactory);
         $openApi = $decorator();
 
-        // Vérification
         self::assertArrayHasKey('JWT', $openApi->getComponents()->getSecuritySchemes());
+
     }
 
 

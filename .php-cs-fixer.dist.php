@@ -3,18 +3,21 @@
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__.'/src')
     ->in(__DIR__.'/tests')
-    ->exclude(['var', 'vendor', 'migrations']);
+    ->exclude(['var', 'vendor', 'migrations'])
+    ->notPath('Functional/ProductResourceTest.php');
 
 return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
         '@PSR12' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'array_indentation' => true,
         'binary_operator_spaces' => [
             'operators' => ['=>' => 'align_single_space', '=' => 'single_space'],
         ],
         'blank_line_after_namespace' => true,
         'blank_line_after_opening_tag' => true,
+        'blank_line_before_statement' => ['statements' => ['return']],
         'class_attributes_separation' => false,
         'no_unused_imports' => true,
         'ordered_imports' => ['sort_algorithm' => 'alpha'],

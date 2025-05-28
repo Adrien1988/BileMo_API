@@ -25,18 +25,14 @@ final class JwtAuthenticationTest extends ApiTestCase
     {
         $container = self::getContainer();
 
-        /** @var EntityManagerInterface $em */
         $em = $container->get(EntityManagerInterface::class);
 
-        /* --- 1. (Re)création du schéma ------------------------------- */
         $schemaTool = new SchemaTool($em);
         $metadata = $em->getMetadataFactory()->getAllMetadata();
 
-        // On repart d’une base propre
         $schemaTool->dropSchema($metadata);
         $schemaTool->createSchema($metadata);
 
-        /* --- 2. Chargement des fixtures ------------------------------ */
         $loader = new Loader();
         $loader->addFixture($container->get(ClientFixtures::class));
         $loader->addFixture($container->get(UserFixtures::class));
@@ -44,6 +40,7 @@ final class JwtAuthenticationTest extends ApiTestCase
 
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());
+
     }
 
 
@@ -53,18 +50,17 @@ final class JwtAuthenticationTest extends ApiTestCase
             ->request('GET', '/api/products');
 
         self::assertResponseStatusCodeSame(401);
+
     }
 
 
     public function test200WithValidToken(): void
     {
-        /* ---------- 1. Fixtures ------------------------------------- */
+
         $this->loadFixtures();
 
-        /* ---------- 2. Génère le JWT -------------------------------- */
         $container = self::getContainer();
 
-        /** @var User $user */
         $user = $container
             ->get(EntityManagerInterface::class)
             ->getRepository(User::class)
@@ -76,14 +72,14 @@ final class JwtAuthenticationTest extends ApiTestCase
             ->get(JWTTokenManagerInterface::class)
             ->create($user);
 
-        /* ---------- 3. Appel protégé -------------------------------- */
         static::createClient(['debug' => false])->request(
             'GET',
             '/api/products',
             ['headers' => ['Authorization' => "Bearer $token"]],
         );
 
-        self::assertResponseIsSuccessful(); // 200
+        self::assertResponseIsSuccessful();
+
     }
 
 

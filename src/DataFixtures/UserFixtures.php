@@ -5,7 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Client;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;   // <- BON namespace
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -18,6 +18,7 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher,
     ) {
+
     }
 
 
@@ -25,10 +26,8 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        /** @var Client $client référence définie dans ClientFixtures */
         $client = $this->getReference(ClientFixtures::REF_PRIMARY_CLIENT, Client::class);
 
-        /* ---------- Utilisateur principal JWT ------------------------ */
         $apiUser = new User();
         $apiUser
             ->setFirstName('Jane')
@@ -42,7 +41,6 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($apiUser);
         $this->addReference(self::REF_API_USER, $apiUser);
 
-        /* ---------- 5 utilisateurs aléatoires ----------------------- */
         for ($i = 0; $i < 5; ++$i) {
             $user = new User();
             $user
@@ -58,6 +56,7 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
+
     }
 
 
@@ -65,6 +64,7 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [ClientFixtures::class];
+
     }
 
 

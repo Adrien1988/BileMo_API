@@ -24,7 +24,6 @@ class UserTest extends TestCase
             ->setIsActive(false)
             ->setClient($client);
 
-        // ─── Getters / setters de base ──────────────────────────────
         self::assertSame('Bob', $user->getFirstName());
         self::assertSame('Jones', $user->getLastName());
         self::assertSame('bob@globex.com', $user->getEmail());
@@ -33,17 +32,15 @@ class UserTest extends TestCase
         self::assertFalse($user->isActive());
         self::assertSame($client, $user->getClient());
 
-        // ─── Couverture des dates ──────────────────────────────────
         $createdAt = $user->getCreatedAt();
         self::assertInstanceOf(\DateTimeImmutable::class, $createdAt);
 
-        // updatedAt débute à null
         self::assertNull($user->getUpdatedAt());
 
-        // on le modifie puis on vérifie
         $now = new \DateTimeImmutable();
         $user->setUpdatedAt($now);
         self::assertSame($now, $user->getUpdatedAt());
+
     }
 
 

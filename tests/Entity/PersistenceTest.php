@@ -19,6 +19,7 @@ class PersistenceTest extends KernelTestCase
     protected static function getKernelClass(): string
     {
         return Kernel::class;
+
     }
 
 
@@ -31,9 +32,9 @@ class PersistenceTest extends KernelTestCase
         $tool = new SchemaTool(self::$em);
         $metadata = self::$em->getMetadataFactory()->getAllMetadata();
 
-        // wipe & build
         $tool->dropSchema($metadata);
         $tool->createSchema($metadata);
+
     }
 
 
@@ -41,6 +42,7 @@ class PersistenceTest extends KernelTestCase
     {
         self::$em->getConnection()->close();
         self::ensureKernelShutdown();
+
     }
 
 
@@ -82,6 +84,7 @@ class PersistenceTest extends KernelTestCase
         self::assertSame('iPhone 15', $reloadedProduct->getName());
         self::assertSame('john@acme.com', $reloadedUser->getEmail());
         self::assertSame($reloadedClient, $reloadedUser->getClient());
+
     }
 
 
