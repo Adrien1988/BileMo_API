@@ -6,7 +6,9 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Enum\UserRole;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
@@ -17,20 +19,40 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(
-    name: '`user`',
-    uniqueConstraints: [new ORM\UniqueConstraint(name: 'uniq_email_per_client', columns: ['client_id', 'email'])]
+#[ORM\Table(name: '`user`')]
+#[ORM\UniqueConstraint(
+    name: 'uniq_email_per_client',
+    columns: ['client_id', 'email']
 )]
 #[UniqueEntity(fields: ['email', 'client'], message: 'This email is already used for this client.')]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
-        new Post(),
-        new Delete(),
+        new Get(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN')  and object.getClient() == user.getClient())"),
+        new Put(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN')  and object.getClient() == user.getClient())"),
+        new Delete(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN')  and object.getClient() == user.getClient())"),
+        new GetCollection(security: "is_granted('ROLE_SUPER_ADMIN')"),
+        new Post(security: "is_granted('ROLE_SUPER_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['user:read']],
     denormalizationContext: ['groups' => ['user:write']]
+)]
+#[ApiResource(
+    uriTemplate: '/clients/{id}/users',
+    uriVariables: [
+        'id' => new Link(fromClass: Client::class, fromProperty: 'users'),
+    ],
+    operations: [
+        new GetCollection(
+            security: "
+            is_granted('ROLE_SUPER_ADMIN') or (
+            is_granted('ROLE_ADMIN') 
+            and user.getClient() 
+            and user.getClient().getId() == request.attributes.get('id')
+            )
+            "
+        ),
+    ],
+    normalizationContext: ['groups' => ['user:read']]
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -71,9 +93,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     #[Groups(['user:read', 'user:write'])]
-    private Client $client;
+    private ?Client $client = null;
 
 
     public function __construct()
@@ -172,7 +194,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        // On tire profit de ta méthode existante
         return [$this->getRole()->value];
 
     }
@@ -217,14 +238,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
-    public function getClient(): Client
+    public function getClient(): ?Client
     {
         return $this->client;
 
     }
 
 
-    public function setClient(Client $client): static
+    public function setClient(?Client $client): static
     {
         $this->client = $client;
 
@@ -242,7 +263,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function eraseCredentials(): void
     {
-        // Laisse vide si tu n’as pas de données sensibles temporaires
+        // Rien à faire
 
     }
 

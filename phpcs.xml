@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+    xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
 
     <description>
         Configuration for PHP_CodeSniffer enforcing PSR-12 on src/ and tests/
@@ -17,8 +17,8 @@
     <exclude-pattern>*/migrations/*</exclude-pattern>
 
     <!-- Arguments -->
-    <arg name="basepath" value="."/>
-    <arg name="colors"/>
+    <arg name="basepath" value="." />
+    <arg name="colors" />
     <arg name="parallel" value="75" />
     <arg value="p" />
 
@@ -51,9 +51,11 @@
         <severity>0</severity>
     </rule>
     <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
-        
+
     </rule>
-    <rule ref="Squiz.Formatting.OperatorBracket"/>
+    <rule ref="Squiz.Formatting.OperatorBracket">
+        <exclude name="Squiz.Formatting.OperatorBracket" />
+    </rule>
 
     <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
@@ -90,7 +92,6 @@
     <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
 
 
-
     <rule ref="Squiz.Commenting.BlockComment" />
     <rule ref="Squiz.Commenting.DocCommentAlignment" />
 
@@ -108,6 +109,5 @@
         <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned" />
     </rule>
 
-    
 
 </ruleset>

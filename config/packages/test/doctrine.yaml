@@ -1,0 +1,5 @@
+doctrine:
+    dbal:
+        dbname_suffix: '_test'
+        # ... le reste
+        url: '%env(resolve:DATABASE_URL)%'
