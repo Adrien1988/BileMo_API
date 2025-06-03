@@ -44,7 +44,7 @@ final class ProductFixtures extends Fixture
             $model = $faker->randomElement(self::PHONES[$brand]);
 
             if ($faker->boolean(30) && !str_contains($model, 'Pro')) {
-                $model .= ' '.$faker->randomElement(['5G', 'Pro', 'Ultra']);
+                $model .= ' ' . $faker->randomElement(['5G', 'Pro', 'Ultra']);
             }
 
             $manager->persist(
@@ -58,8 +58,5 @@ final class ProductFixtures extends Fixture
         }
 
         $manager->flush();
-
     }
-
-
 }

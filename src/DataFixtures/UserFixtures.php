@@ -20,7 +20,6 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher,
     ) {
-
     }
 
 
@@ -119,15 +118,11 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-
     }
 
 
     public function getDependencies(): array
     {
         return [ClientFixtures::class];
-
     }
-
-
 }
