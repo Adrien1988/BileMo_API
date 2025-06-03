@@ -91,6 +91,9 @@
     <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace" />
     <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
 
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
+    </rule>
 
     <rule ref="Squiz.Commenting.BlockComment" />
     <rule ref="Squiz.Commenting.DocCommentAlignment" />
