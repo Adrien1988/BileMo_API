@@ -20,7 +20,7 @@ return (new PhpCsFixer\Config())
         ],
         'blank_line_after_namespace'      => true,
         'blank_line_after_opening_tag'    => true,
-        'blank_line_before_statement'     => ['statements' => ['return']],
+        'blank_line_before_statement'     => ['statements' => ['return','throw','continue','break']],
         'class_attributes_separation'     => false,
         'no_unused_imports'               => true,
         'ordered_imports'                 => ['sort_algorithm' => 'alpha'],
@@ -38,7 +38,7 @@ return (new PhpCsFixer\Config())
         'no_blank_lines_after_phpdoc'     => false,
         'yoda_style'                      => false,
         'align_multiline_comment'         => true,
-        'method_argument_space'           => ['on_multiline' => 'ignore'],
+        'method_argument_space'           => ['on_multiline' => 'ensure_fully_multiline'],
          'concat_space' => ['spacing' => 'one'],
     ])
     ->setFinder($finder);

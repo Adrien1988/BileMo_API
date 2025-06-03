@@ -94,4 +94,10 @@
         <severity>0</severity>
     </rule>
 
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1" />
+        </properties>
+    </rule>
+
 </ruleset>
