@@ -11,7 +11,8 @@ final class ClientFixtures extends Fixture
 {
     public const REF_PRIMARY_CLIENT = 'primary-client';
     public const REF_OTHER_CLIENT = 'other-client';
-    public const REF_CLIENT_PREFIX = 'client-'; // Pour accès dynamique si besoin
+    public const REF_CLIENT_PREFIX = 'client-';
+
 
     public function load(ObjectManager $manager): void
     {
