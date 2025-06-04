@@ -12,6 +12,9 @@ class ProductResourceTest extends ApiTestCase
 {
     use JwtAuthenticatedUserTrait;
 
+    /**
+     * @var \Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool
+     */
     private $databaseTool;
 
 
