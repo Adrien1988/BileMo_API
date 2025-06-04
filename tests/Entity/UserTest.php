@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
+
+
     public function testAllGettersAndSetters(): void
     {
         $client = (new Client())->setName('Globex');
@@ -38,5 +40,8 @@ class UserTest extends TestCase
         $now = new \DateTimeImmutable();
         $user->setUpdatedAt($now);
         self::assertSame($now, $user->getUpdatedAt());
+
     }
+
+
 }

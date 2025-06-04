@@ -38,6 +38,7 @@ final class ClientUserResourceTest extends ApiTestCase
             ClientFixtures::class,
             UserFixtures::class,
         ]);
+
     }
 
 
@@ -52,10 +53,11 @@ final class ClientUserResourceTest extends ApiTestCase
     ): ?int {
         $payload = $client->request(
             'GET',
-            '/api/clients?name=' . urlencode($name)
+            '/api/clients?name='.urlencode($name)
         )->toArray(false);
 
         return $payload['hydra:member'][0]['id'] ?? null;
+
     }
 
 
@@ -78,6 +80,7 @@ final class ClientUserResourceTest extends ApiTestCase
         // Produits → 200
         $client->request('GET', '/api/products');
         $this->assertResponseIsSuccessful();
+
     }
 
 
@@ -121,6 +124,7 @@ final class ClientUserResourceTest extends ApiTestCase
         // Liste des produits → 200
         $client->request('GET', '/api/products');
         $this->assertResponseIsSuccessful();
+
     }
 
 
@@ -157,6 +161,7 @@ final class ClientUserResourceTest extends ApiTestCase
         // Liste users globale → 200
         $client->request('GET', '/api/users');
         $this->assertResponseIsSuccessful();
+
     }
 
 
@@ -183,5 +188,8 @@ final class ClientUserResourceTest extends ApiTestCase
         // Users d’un autre client → 403
         $client->request('GET', "/api/clients/{$other->getId()}/users");
         $this->assertResponseStatusCodeSame(403);
+
     }
+
+
 }

@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
+
+
     public function testFullEntityBehaviour(): void
     {
         $client = (new Client())
@@ -41,5 +43,8 @@ class ClientTest extends TestCase
 
         $client->removeUser($user);
         self::assertCount(0, $client->getUsers());
+
     }
+
+
 }

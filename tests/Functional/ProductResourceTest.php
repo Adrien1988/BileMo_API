@@ -27,6 +27,7 @@ class ProductResourceTest extends ApiTestCase
             UserFixtures::class,
             ProductFixtures::class,
         ]);
+
     }
 
 
@@ -36,6 +37,7 @@ class ProductResourceTest extends ApiTestCase
         $response = $client->request('GET', '/api/products');
         $this->assertResponseIsSuccessful();
         $this->assertCount(30, $response->toArray()['hydra:member']);
+
     }
 
 
@@ -45,6 +47,7 @@ class ProductResourceTest extends ApiTestCase
         $response = $client->request('GET', '/api/products?page=2&itemsPerPage=5');
         $this->assertResponseIsSuccessful();
         $this->assertCount(5, $response->toArray()['hydra:member']);
+
     }
 
 
@@ -57,6 +60,7 @@ class ProductResourceTest extends ApiTestCase
         $sorted = $names;
         sort($sorted, (SORT_NATURAL | SORT_FLAG_CASE));
         $this->assertSame($sorted, $names);
+
     }
 
 
@@ -69,5 +73,8 @@ class ProductResourceTest extends ApiTestCase
         $sorted = $prices;
         rsort($sorted, SORT_NUMERIC);
         $this->assertSame($sorted, $prices);
+
     }
+
+
 }

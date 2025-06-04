@@ -34,9 +34,12 @@ final class ClientFixtures extends Fixture
             $client = (new Client())
                 ->setName($faker->unique()->company());
             $manager->persist($client);
-            $this->addReference(self::REF_CLIENT_PREFIX . $i, $client);
+            $this->addReference(self::REF_CLIENT_PREFIX.$i, $client);
         }
 
         $manager->flush();
+
     }
+
+
 }

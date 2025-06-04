@@ -1,3 +1,4 @@
 # .gitattributes
 *.sh  text eol=lf
 *.ps1 text eol=crlf
+*.php text eol=lf

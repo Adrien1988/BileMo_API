@@ -101,18 +101,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+
     }
 
 
     public function getId(): ?int
     {
         return $this->id;
+
     }
 
 
     public function getFirstName(): string
     {
         return $this->firstName;
+
     }
 
 
@@ -121,12 +124,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->firstName = $firstName;
 
         return $this;
+
     }
 
 
     public function getLastName(): string
     {
         return $this->lastName;
+
     }
 
 
@@ -135,12 +140,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastName = $lastName;
 
         return $this;
+
     }
 
 
     public function getEmail(): string
     {
         return $this->email;
+
     }
 
 
@@ -149,12 +156,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
 
         return $this;
+
     }
 
 
     public function getPassword(): string
     {
         return $this->password;
+
     }
 
 
@@ -163,12 +172,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
 
         return $this;
+
     }
 
 
     public function getRole(): UserRole
     {
         return $this->role;
+
     }
 
 
@@ -177,18 +188,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->role = $role;
 
         return $this;
+
     }
 
 
     public function getRoles(): array
     {
         return [$this->getRole()->value];
+
     }
 
 
     public function isActive(): bool
     {
         return $this->isActive;
+
     }
 
 
@@ -197,18 +211,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isActive = $isActive;
 
         return $this;
+
     }
 
 
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+
     }
 
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+
     }
 
 
@@ -217,12 +234,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updatedAt = $updatedAt;
 
         return $this;
+
     }
 
 
     public function getClient(): ?Client
     {
         return $this->client;
+
     }
 
 
@@ -231,17 +250,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->client = $client;
 
         return $this;
+
     }
 
 
     public function getUserIdentifier(): string
     {
         return $this->email;
+
     }
 
 
     public function eraseCredentials(): void
     {
         // Rien à faire
+
     }
+
+
 }

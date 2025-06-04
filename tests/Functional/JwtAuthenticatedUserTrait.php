@@ -8,6 +8,8 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 trait JwtAuthenticatedUserTrait
 {
+
+
     /**
      * Crée un client API authentifié par JWT pour l'utilisateur voulu.
      *
@@ -35,5 +37,8 @@ trait JwtAuthenticatedUserTrait
         return static::createClient([], [
             'auth_bearer' => $token,
         ]);
+
     }
+
+
 }

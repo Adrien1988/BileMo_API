@@ -7,6 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 class ProductTest extends TestCase
 {
+
+
     public function testGettersAndSetters(): void
     {
         $product = (new Product())
@@ -21,5 +23,8 @@ class ProductTest extends TestCase
         self::assertSame('999.90', $product->getPrice());
         self::assertSame('Samsung', $product->getBrand());
         self::assertSame('https://example.com/galaxy_s25.png', $product->getImageUrl());
+
     }
+
+
 }

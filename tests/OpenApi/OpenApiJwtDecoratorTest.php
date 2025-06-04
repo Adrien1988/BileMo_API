@@ -12,9 +12,13 @@ use PHPUnit\Framework\TestCase;
 
 final class OpenApiJwtDecoratorTest extends TestCase
 {
+
+
     public function testAddsJwtScheme(): void
     {
         $dummyFactory = new class () implements OpenApiFactoryInterface {
+
+
             /** @param array<string,mixed> $context */
             public function __invoke(array $context = []): OpenApi
             {
@@ -25,11 +29,16 @@ final class OpenApiJwtDecoratorTest extends TestCase
                     new Components(),
                 );
             }
+
+
         };
 
         $decorator = new OpenApiJwtDecorator($dummyFactory);
         $openApi = $decorator();
 
         self::assertArrayHasKey('JWT', $openApi->getComponents()->getSecuritySchemes());
+
     }
+
+
 }

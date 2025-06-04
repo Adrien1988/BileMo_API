@@ -89,18 +89,21 @@ class Client
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->users = new ArrayCollection();
+
     }
 
 
     public function getId(): ?int
     {
         return $this->id;
+
     }
 
 
     public function getName(): string
     {
         return $this->name;
+
     }
 
 
@@ -109,12 +112,14 @@ class Client
         $this->name = $name;
 
         return $this;
+
     }
 
 
     public function isActive(): bool
     {
         return $this->isActive;
+
     }
 
 
@@ -123,18 +128,21 @@ class Client
         $this->isActive = $isActive;
 
         return $this;
+
     }
 
 
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+
     }
 
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
+
     }
 
 
@@ -143,6 +151,7 @@ class Client
         $this->updatedAt = $updatedAt;
 
         return $this;
+
     }
 
 
@@ -152,6 +161,7 @@ class Client
     public function getUsers(): Collection
     {
         return $this->users;
+
     }
 
 
@@ -163,6 +173,7 @@ class Client
         }
 
         return $this;
+
     }
 
 
@@ -173,5 +184,8 @@ class Client
         }
 
         return $this;
+
     }
+
+
 }
