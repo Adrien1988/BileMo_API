@@ -50,11 +50,9 @@
     <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
         <severity>0</severity>
     </rule>
-    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
-
-    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine" />
     <rule ref="Squiz.Formatting.OperatorBracket">
-        <exclude name="Squiz.Formatting.OperatorBracket" />
+        <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets" />
     </rule>
 
     <rule ref="Generic.PHP.ForbiddenFunctions">
@@ -92,7 +90,10 @@
     <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
 
 
-    <rule ref="Squiz.Commenting.BlockComment" />
+    <rule ref="Squiz.Commenting.BlockComment">
+        <exclude name="Squiz.Commenting.BlockComment" />
+    </rule>
+
     <rule ref="Squiz.Commenting.DocCommentAlignment" />
 
     <!-- Désactivation de règles conflictuelles -->
