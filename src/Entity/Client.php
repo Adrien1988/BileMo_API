@@ -30,6 +30,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 )]
 class Client
 {
+
     /**
      * The unique identifier of the client.
      *
