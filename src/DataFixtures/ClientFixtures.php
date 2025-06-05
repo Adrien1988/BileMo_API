@@ -13,6 +13,7 @@ final class ClientFixtures extends Fixture
     public const REF_OTHER_CLIENT = 'other-client';
     public const REF_CLIENT_PREFIX = 'client-';
 
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
