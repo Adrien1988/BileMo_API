@@ -51,7 +51,7 @@ final class UserCreationProcessorTest extends TestCase
 
         /** @var Security&MockObject $security */
         $security = $this->createMock(Security::class);
-        $security->method('getUser')->willReturn($otherUser);   // type compatible
+        $security->method('getUser')->willReturn($otherUser);
 
         $processor = $this->getProcessor($security);
 
