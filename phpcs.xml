@@ -50,10 +50,10 @@
     <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
         <severity>0</severity>
     </rule>
-    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
-        
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine"/>
+    <rule ref="Squiz.Formatting.OperatorBracket">
+        <exclude name="Squiz.Formatting.OperatorBracket.MissingBrackets"/>
     </rule>
-    <rule ref="Squiz.Formatting.OperatorBracket"/>
 
     <rule ref="Generic.PHP.ForbiddenFunctions">
         <properties>
@@ -108,6 +108,7 @@
         <exclude name="Squiz.Arrays.ArrayDeclaration.KeyNotAligned" />
     </rule>
 
-    
+    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+
 
 </ruleset>

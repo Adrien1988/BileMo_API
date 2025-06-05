@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,8 +19,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Table(name: 'client')]
 #[ApiResource(
     operations: [
-        new Get(),
-        new GetCollection(),
+        new Get(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN') and object == user.getClient())"),
+        new GetCollection(security: "is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN')"),
+        new Post(security: "is_granted('ROLE_SUPER_ADMIN')"),
+        new Put(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN') and object == user.getClient())"),
+        new Delete(security: "is_granted('ROLE_SUPER_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['client:read']],
     denormalizationContext: ['groups' => ['client:write']]
@@ -75,6 +81,7 @@ class Client
      * @var Collection<int, User>
      */
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: User::class, orphanRemoval: true, cascade: ['persist'])]
+    #[Groups(['client:read'])]
     private Collection $users;
 
 

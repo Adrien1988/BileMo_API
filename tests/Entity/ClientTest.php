@@ -13,7 +13,6 @@ class ClientTest extends TestCase
 
     public function testFullEntityBehaviour(): void
     {
-
         $client = (new Client())
             ->setName('ACME')
             ->setIsActive(false);

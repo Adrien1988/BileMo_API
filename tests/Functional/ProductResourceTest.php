@@ -3,39 +3,41 @@
 namespace App\Tests\Functional;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use App\DataFixtures\ClientFixtures;
 use App\DataFixtures\ProductFixtures;
-use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Doctrine\Common\DataFixtures\Loader;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\EntityManagerInterface;
+use App\DataFixtures\UserFixtures;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 
 class ProductResourceTest extends ApiTestCase
 {
-    use JwtAuthenticatedClientTrait;
+    use JwtAuthenticatedUserTrait;
+
+    /**
+     * @var \Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool
+     */
+    private AbstractDatabaseTool $databaseTool;
 
 
-    /** Charge 150 produits avant la toute première méthode de test */
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        self::bootKernel();
-        // @var EntityManagerInterface $em
+        parent::setUp();
 
-        $em = self::getContainer()->get(EntityManagerInterface::class);
-
-        $loader = new Loader();
-        $loader->addFixture(new ProductFixtures());
-
-        $executor = new ORMExecutor($em, new ORMPurger($em));
-        $executor->execute($loader->getFixtures());
+        // Charge tous les jeux de fixtures nécessaires (ordre important !)
+        $this->databaseTool = self::getContainer()->get(DatabaseToolCollection::class)->get();
+        $this->databaseTool->loadFixtures([
+            ClientFixtures::class,
+            UserFixtures::class,
+            ProductFixtures::class,
+        ]);
 
     }
 
 
     public function testDefaultPaginationIs30(): void
     {
-        $client = $this->createAuthenticatedClient();
+        $client = $this->createAuthenticatedUserClient();
         $response = $client->request('GET', '/api/products');
-
         $this->assertResponseIsSuccessful();
         $this->assertCount(30, $response->toArray()['hydra:member']);
 
@@ -44,9 +46,8 @@ class ProductResourceTest extends ApiTestCase
 
     public function testItemsPerPageAndPageParams(): void
     {
-        $client = $this->createAuthenticatedClient();
+        $client = $this->createAuthenticatedUserClient();
         $response = $client->request('GET', '/api/products?page=2&itemsPerPage=5');
-
         $this->assertResponseIsSuccessful();
         $this->assertCount(5, $response->toArray()['hydra:member']);
 
@@ -55,14 +56,12 @@ class ProductResourceTest extends ApiTestCase
 
     public function testOrderByNameAsc(): void
     {
-        $client = $this->createAuthenticatedClient();
+        $client = $this->createAuthenticatedUserClient();
         $data = $client->request('GET', '/api/products?order[name]=asc&itemsPerPage=100')
-                         ->toArray()['hydra:member'];
-
+            ->toArray()['hydra:member'];
         $names = array_column($data, 'name');
         $sorted = $names;
         sort($sorted, (SORT_NATURAL | SORT_FLAG_CASE));
-
         $this->assertSame($sorted, $names);
 
     }
@@ -70,14 +69,12 @@ class ProductResourceTest extends ApiTestCase
 
     public function testOrderByPriceDesc(): void
     {
-        $client = $this->createAuthenticatedClient();
+        $client = $this->createAuthenticatedUserClient();
         $data = $client->request('GET', '/api/products?order[price]=desc&itemsPerPage=100')
-                         ->toArray()['hydra:member'];
-
+            ->toArray()['hydra:member'];
         $prices = array_map('floatval', array_column($data, 'price'));
         $sorted = $prices;
         rsort($sorted, SORT_NUMERIC);
-
         $this->assertSame($sorted, $prices);
 
     }
