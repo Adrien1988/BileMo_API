@@ -21,6 +21,7 @@ use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
  */
 final class JwtAuthenticationTest extends ApiTestCase
 {
+
     private AbstractDatabaseTool $db;
 
 
