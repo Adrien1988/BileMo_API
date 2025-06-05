@@ -11,6 +11,7 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Enum\UserRole;
 use App\Repository\UserRepository;
+use App\State\UserCreationProcessor;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -31,10 +32,11 @@ use Symfony\Component\Serializer\Attribute\Groups;
         new Put(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN')  and object.getClient() == user.getClient())"),
         new Delete(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN')  and object.getClient() == user.getClient())"),
         new GetCollection(security: "is_granted('ROLE_SUPER_ADMIN')"),
-        new Post(security: "is_granted('ROLE_SUPER_ADMIN')"),
+        new Post(security: "is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN')", processor: UserCreationProcessor::class, denormalizationContext: ['groups' => ['user:write', 'user:write:superadmin']]
+        ),
     ],
     normalizationContext: ['groups' => ['user:read']],
-    denormalizationContext: ['groups' => ['user:write']]
+
 )]
 #[ApiResource(
     uriTemplate: '/clients/{id}/users',
@@ -94,7 +96,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(['user:read', 'user:write'])]
+    #[Groups(['user:read', 'user:write', 'user:write:superadmin'])]
     private ?Client $client = null;
 
 
