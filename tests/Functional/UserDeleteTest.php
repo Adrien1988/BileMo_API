@@ -19,7 +19,7 @@ final class UserDeleteTest extends ApiTestCase
      * @var \Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool
      */
     private $databaseTool;
-    
+
     private ReferenceRepository $referenceRepo;
 
     /** @var array<string,int> */
