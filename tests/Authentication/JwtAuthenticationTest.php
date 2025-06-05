@@ -56,6 +56,7 @@ final class JwtAuthenticationTest extends ApiTestCase
     /** Avec un JWT valide → 200 */
     public function test200WithValidToken(): void
     {
+
         $container = self::getContainer();
 
         /** @var EntityManagerInterface $em */

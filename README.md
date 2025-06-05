@@ -5,14 +5,14 @@ REST catalog powered by Symfony 6.4 & API Platform.
 ## Architecture : diagrammes
 
 ### UML – Diagramme de classes
-* Fichier : `docs/diagrams/Diagramme classe.png`  
+* Fichier : `docs/diagrams/DiagramClasse.png`  
 * Aperçu :  
-  ![Class diagram](docs/diagrams/Diagramme classe.png)
+  ![Class diagram](docs/diagrams/DiagramClasse.png)
 
 ### UML – Séquence « Create User »
-* Fichier : `docs/diagrams/Diagramme séquence.png`  
+* Fichier : `docs/diagrams/DiagramSequence.png`  
 * Aperçu :  
-  ![Sequence diagram](docs/diagrams/Diagramme séquence.png)
+  ![Sequence diagram](docs/diagrams/DiagramSequence.png)
 
 ### Entity-Relationship (MLD)
 * Fichier : `docs/diagrams/MLD.png`  

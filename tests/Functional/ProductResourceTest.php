@@ -6,6 +6,7 @@ use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\DataFixtures\ClientFixtures;
 use App\DataFixtures\ProductFixtures;
 use App\DataFixtures\UserFixtures;
+use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 
 class ProductResourceTest extends ApiTestCase
