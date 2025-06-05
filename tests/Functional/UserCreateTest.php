@@ -67,7 +67,7 @@ final class UserCreateTest extends ApiTestCase
     public function testSuperAdminCanCreateUserForAnyClient(): void
     {
         $client = $this->createAuthenticatedUserClient('superadmin@example.com', 'supersecret');
-        $clientIri = '/api/clients/1'; // adapte si besoin à tes fixtures
+        $clientIri = '/api/clients/1';
 
         $client->request('POST', '/api/users', [
             'headers' => ['Content-Type' => 'application/ld+json'],
@@ -113,7 +113,7 @@ final class UserCreateTest extends ApiTestCase
     public function testAdminCannotCreateUserForAnotherClient(): void
     {
         $client = $this->createAuthenticatedUserClient('admin@acme.com', 'adminsecret');
-        $otherClientIri = '/api/clients/2'; // IRI d’un autre client que le sien
+        $otherClientIri = '/api/clients/2';
 
         $client->request('POST', '/api/users', [
             'headers' => ['Content-Type' => 'application/ld+json'],
@@ -155,7 +155,7 @@ final class UserCreateTest extends ApiTestCase
         $client->request('POST', '/api/users', [
             'headers' => ['Content-Type' => 'application/ld+json'],
             'json'    => [
-                'email'     => 'dup@acme.com',   // même email
+                'email'     => 'dup@acme.com',
                 'password'  => 'SecurePass!99',
                 'firstName' => 'Second',
                 'lastName'  => 'Try',
