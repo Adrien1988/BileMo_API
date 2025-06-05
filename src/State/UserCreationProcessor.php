@@ -53,7 +53,7 @@ class UserCreationProcessor implements ProcessorInterface
 
         if ($isAdmin) {
             $adminClient = $currentUser->getClient();
-            $requestedClient = $data->getClient();          // peut être null ou un autre client
+            $requestedClient = $data->getClient();
 
             // L’admin a renseigné un client différent → 403
             if ($requestedClient && $requestedClient !== $adminClient) {
