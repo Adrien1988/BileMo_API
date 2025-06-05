@@ -26,7 +26,7 @@ trait JwtAuthenticatedUserTrait
         $user = $userRepo->findOneBy(['email' => $email]);
 
         if (!$user) {
-            throw new \LogicException("L'utilisateur de test '$email' n'existe pas dans la base de données fixtures.");
+            throw new \LogicException(sprintf("L'utilisateur de test '%s' n'existe pas dans la base de données fixtures.", htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')));
         }
 
         // @var JWTTokenManagerInterface $jwt

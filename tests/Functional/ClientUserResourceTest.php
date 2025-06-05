@@ -10,7 +10,6 @@ use App\DataFixtures\ClientFixtures;
 use App\DataFixtures\UserFixtures;
 use App\Repository\ClientRepository;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
-use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 
 /**
  * Vérifie les règles d’accès aux ressources Client / User
@@ -20,7 +19,10 @@ final class ClientUserResourceTest extends ApiTestCase
 {
     use JwtAuthenticatedUserTrait;
 
-    private AbstractDatabaseTool $databaseTool;
+    /**
+     * @var \Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool
+     */
+    private $databaseTool;
 
 
     protected function setUp(): void

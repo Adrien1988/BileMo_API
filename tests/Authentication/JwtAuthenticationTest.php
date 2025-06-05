@@ -56,7 +56,6 @@ final class JwtAuthenticationTest extends ApiTestCase
 
     public function test200WithValidToken(): void
     {
-
         $this->loadFixtures();
 
         $container = self::getContainer();

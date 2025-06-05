@@ -42,7 +42,7 @@ yarn-error.log
 ###< Symfony standard additions ###
 
 ###> phpstan/phpstan ###
-phpstan.neon
+/phpstan.dist.neon
 ###< phpstan/phpstan ###
 
 ###> phpunit/phpunit ###
@@ -51,10 +51,14 @@ phpstan.neon
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.cache
+/.php-cs-fixer.dist.php
+/cs-fix.bat
+/cs.bat
 ###< friendsofphp/php-cs-fixer ###
 
 ###> squizlabs/php_codesniffer ###
 /.phpcs-cache
+/phpcs.xml
 ###< squizlabs/php_codesniffer ###
 
 ###> symfony/phpunit-bridge ###
