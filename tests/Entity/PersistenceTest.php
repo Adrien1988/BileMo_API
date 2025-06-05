@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PersistenceTest extends KernelTestCase
 {
+
     private static EntityManagerInterface $em;
 
 
