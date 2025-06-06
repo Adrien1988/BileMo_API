@@ -16,7 +16,7 @@ class ProductResourceTest extends ApiTestCase
     /**
      * @var \Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool
      */
-    private AbstractDatabaseTool $databaseTool;
+    private $databaseTool;
 
 
     protected function setUp(): void
