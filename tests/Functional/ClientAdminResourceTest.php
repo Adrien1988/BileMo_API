@@ -1,4 +1,5 @@
 <?php
+
 // tests/Functional/ClientAdminResourceTest.php
 
 namespace App\Tests\Functional;
@@ -30,6 +31,7 @@ class ClientAdminResourceTest extends ApiTestCase
             ClientFixtures::class,
             UserFixtures::class,
         ]);
+
     }
 
 
@@ -37,7 +39,7 @@ class ClientAdminResourceTest extends ApiTestCase
     public function superAdminCanCrudClient(): void
     {
         // Super-admin défini dans UserFixtures
-        $client  = $this->createAuthenticatedUserClient('superadmin@example.com');
+        $client = $this->createAuthenticatedUserClient('superadmin@example.com');
         $headers = [
             'Content-Type' => 'application/ld+json',
             'Accept'       => 'application/ld+json',
@@ -64,13 +66,14 @@ class ClientAdminResourceTest extends ApiTestCase
         /* --- DELETE --- */
         $client->request('DELETE', $iri);
         $this->assertResponseStatusCodeSame(204);
+
     }
 
 
     /** @test */
     public function otherRolesGet403OnWrite(): void
     {
-        $client  = $this->createAuthenticatedUserClient('api@example.com');
+        $client = $this->createAuthenticatedUserClient('api@example.com');
         $headers = [
             'Content-Type' => 'application/ld+json',
             'Accept'       => 'application/ld+json',
@@ -81,6 +84,7 @@ class ClientAdminResourceTest extends ApiTestCase
             'json'    => ['name' => 'Forbidden Corp'],
         ]);
         $this->assertResponseStatusCodeSame(403);
+
     }
 
 
@@ -88,7 +92,7 @@ class ClientAdminResourceTest extends ApiTestCase
     public function duplicateNameReturns422(): void
     {
         // « Client A » est déjà créé par ClientFixtures
-        $client  = $this->createAuthenticatedUserClient('superadmin@example.com');
+        $client = $this->createAuthenticatedUserClient('superadmin@example.com');
         $headers = [
             'Content-Type' => 'application/ld+json',
             'Accept'       => 'application/ld+json',
@@ -99,5 +103,8 @@ class ClientAdminResourceTest extends ApiTestCase
             'json'    => ['name' => 'Acme Corp'],
         ]);
         $this->assertResponseStatusCodeSame(422);
+
     }
+
+
 }
