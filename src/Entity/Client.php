@@ -6,27 +6,30 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[ORM\Table(name: 'client')]
+#[UniqueEntity(fields: ['name'], groups: ['client:write'])]
 #[ApiResource(
     operations: [
-        new Get(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN') and object == user.getClient())"),
-        new GetCollection(security: "is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN')"),
+        new Get(security: "is_granted('ROLE_SUPER_ADMIN')"),
+        new GetCollection(security: "is_granted('ROLE_SUPER_ADMIN')"),
         new Post(security: "is_granted('ROLE_SUPER_ADMIN')"),
-        new Put(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN') and object == user.getClient())"),
+        new Patch(security: "is_granted('ROLE_SUPER_ADMIN')"),
         new Delete(security: "is_granted('ROLE_SUPER_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['client:read']],
-    denormalizationContext: ['groups' => ['client:write']]
+    denormalizationContext: ['groups' => ['client:write']],
+    validationContext: ['groups' => ['Default', 'client:write']]
 )]
 class Client
 {
@@ -45,7 +48,7 @@ class Client
      *
      * @var string
      */
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique:true)]
     #[Groups(['client:read', 'client:write'])]
     private string $name;
 
