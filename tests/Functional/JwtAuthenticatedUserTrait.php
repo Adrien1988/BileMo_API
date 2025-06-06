@@ -11,28 +11,42 @@ trait JwtAuthenticatedUserTrait
 
 
     /**
-     * Crée un client API authentifié par JWT pour l'utilisateur voulu.
+     * Génère un JWT pour l’utilisateur identifié par son e-mail.
      *
-     * @param string $email    Email de l'utilisateur de test
-     * @param string $password (ignoré, pour compatibilité éventuelle future, ou tu peux le gérer selon ta stratégie)
+     * @param string      $email    Email de l’utilisateur présent dans les fixtures
+     * @param string|null $password Paramètre facultatif (ignoré, conservé pour compatibilité)
      */
-    private function createAuthenticatedUserClient(string $email = 'api@example.com', string $password = 'secret'): ApiTestClient
+    private function getJwt(string $email, ?string $password = null): string
     {
         $container = static::getContainer();
 
-        // @var UserRepository $userRepo
-
+        /** @var UserRepository $userRepo */
         $userRepo = $container->get(UserRepository::class);
         $user = $userRepo->findOneBy(['email' => $email]);
 
         if (!$user) {
-            throw new \LogicException(sprintf("L'utilisateur de test '%s' n'existe pas dans la base de données fixtures.", htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')));
+            throw new \LogicException(sprintf('L’utilisateur de test « %s » n’existe pas dans les fixtures.', htmlspecialchars($email, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')));
         }
 
-        // @var JWTTokenManagerInterface $jwt
+        /** @var JWTTokenManagerInterface $jwtManager */
+        $jwtManager = $container->get(JWTTokenManagerInterface::class);
 
-        $jwt = $container->get(JWTTokenManagerInterface::class);
-        $token = $jwt->create($user);
+        return $jwtManager->create($user);
+
+    }
+
+
+    /**
+     * Retourne un client API déjà authentifié (header Bearer).
+     *
+     * @param string      $email    Email de l’utilisateur ciblé
+     * @param string|null $password Paramètre facultatif, laissé pour compatibilité
+     */
+    private function createAuthenticatedUserClient(
+        string $email = 'api@example.com',
+        ?string $password = null,
+    ): ApiTestClient {
+        $token = $this->getJwt($email, $password);
 
         return static::createClient([], [
             'auth_bearer' => $token,
