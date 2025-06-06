@@ -27,6 +27,7 @@ class ClientFilterTest extends ApiTestCase
             ClientFixtures::class,
             UserFixtures::class,
         ]);
+
     }
 
 
@@ -59,5 +60,8 @@ class ClientFilterTest extends ApiTestCase
             // la page courante doit être > page précédente
             $this->assertSame((int) $prev['page'] + 1, (int) $curr['page']);
         }
+
     }
+
+
 }

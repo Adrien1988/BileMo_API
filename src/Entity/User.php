@@ -2,26 +2,26 @@
 
 namespace App\Entity;
 
-use App\Enum\UserRole;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Put;
-use ApiPlatform\Metadata\Link;
-use ApiPlatform\Metadata\Post;
-use Doctrine\DBAL\Types\Types;
-use ApiPlatform\Metadata\Delete;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\UserRepository;
-use ApiPlatform\Metadata\ApiFilter;
-use App\State\UserCreationProcessor;
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use Symfony\Component\Serializer\Attribute\Groups;
-use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use App\Enum\UserRole;
+use App\Repository\UserRepository;
+use App\State\UserCreationProcessor;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -66,7 +66,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
     'firstName' => 'ipartial',
     'lastName'  => 'ipartial',
 ])]
-#[ApiFilter(DateFilter::class,  properties: ['createdAt'])]
+#[ApiFilter(DateFilter::class, properties: ['createdAt'])]
 #[ApiFilter(OrderFilter::class, properties: [
     'firstName',
     'lastName',

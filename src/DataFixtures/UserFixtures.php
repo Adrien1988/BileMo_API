@@ -19,7 +19,9 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
 
     public function __construct(
         private readonly UserPasswordHasherInterface $hasher,
-    ) {}
+    ) {
+
+    }
 
 
     public function load(ObjectManager $manager): void
@@ -103,8 +105,6 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
         $refl->setValue($veryOld, new \DateTimeImmutable('2024-06-01'));
         $manager->persist($veryOld);
 
-
-
         // ----- Users standards pour le client principal -----
         for ($i = 0; $i < 5; ++$i) {
             $user = new User();
@@ -144,11 +144,15 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
+
     }
 
 
     public function getDependencies(): array
     {
         return [ClientFixtures::class];
+
     }
+
+
 }
