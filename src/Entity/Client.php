@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -31,6 +35,16 @@ use Symfony\Component\Serializer\Attribute\Groups;
     denormalizationContext: ['groups' => ['client:write']],
     validationContext: ['groups' => ['Default', 'client:write']]
 )]
+/* -------------- Filtres -------------- */
+#[ApiFilter(SearchFilter::class, properties: [
+    'name'     => 'ipartial',
+    'isActive' => 'exact',
+])]
+#[ApiFilter(OrderFilter::class, properties: [
+    'name',
+    'createdAt',
+])]
+#[ApiFilter(DateFilter::class, properties: ['createdAt'])]
 class Client
 {
 

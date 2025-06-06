@@ -30,6 +30,15 @@ final class ClientFixtures extends Fixture
         $manager->persist($other);
         $this->addReference(self::REF_OTHER_CLIENT, $other);
 
+        // Client inactif pour les tests de filtre
+        for ($i = 0; $i < 6; ++$i) {
+            $inactive = (new Client())
+                ->setName('Inactive '.$faker->unique()->company())
+                ->setIsActive(false);
+            $manager->persist($inactive);
+            $this->addReference('inactive-client-'.$i, $inactive);
+        }
+
         // 3 autres clients générés aléatoirement, référencés dynamiquement
         for ($i = 0; $i < 3; ++$i) {
             $client = (new Client())
