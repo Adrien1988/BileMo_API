@@ -10,11 +10,11 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[ORM\Table(name: 'product')]
@@ -24,8 +24,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     operations: [
         new Get(security: "is_granted('IS_AUTHENTICATED_FULLY')"),
         new GetCollection(security: "is_granted('IS_AUTHENTICATED_FULLY')"),
-        new Post(security: "is_granted('ROLE_SUPER_ADMIN')"),
-        new Put(security: "is_granted('ROLE_SUPER_ADMIN')"),
+        new Post(security: "is_granted('ROLE_SUPER_ADMIN')", securityMessage: 'Réservé aux super-admins.'),
         new Patch(security: "is_granted('ROLE_SUPER_ADMIN')"),
         new Delete(security: "is_granted('ROLE_SUPER_ADMIN')"),
     ],
@@ -51,6 +50,7 @@ class Product
 
     #[ORM\Column(length: 255)]
     #[Groups(['product:read', 'product:write'])]
+    #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
     private string $name;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -59,6 +59,7 @@ class Product
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     #[Groups(['product:read', 'product:write'])]
+    #[Assert\Positive(message: 'Le prix doit être strictement positif.')]
     private string $price;
 
     #[ORM\Column(length: 255)]
