@@ -1,0 +1,6 @@
+# Active la gestion de profondeur pour éviter les boucles infinies
+framework:
+  serializer:
+    default_context:
+      enable_max_depth: true
+      circular_reference_handler: 'App\Serializer\IriCircularHandler'
