@@ -24,7 +24,12 @@ class ProductFilterRangeTest extends ApiTestCase
      */
     private function parseQuery(string $url): array
     {
-        $queryString = parse_url($url, PHP_URL_QUERY) ?? '';
+        // On repère le premier « ? » pour isoler la query-string.
+        $queryString = '';
+        $qPos = strpos($url, '?');
+        if ($qPos !== false) {
+            $queryString = substr($url, $qPos + 1);
+        }
 
         return $queryString === '' ? [] : Request::create('/?'.$queryString)->query->all();
 
