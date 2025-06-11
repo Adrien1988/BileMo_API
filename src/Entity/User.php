@@ -6,6 +6,7 @@ use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -22,6 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\MaxDepth;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -29,7 +31,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
     name: 'uniq_email_per_client',
     columns: ['client_id', 'email']
 )]
-#[UniqueEntity(fields: ['email', 'client'], message: 'This email is already used for this client.')]
+#[UniqueEntity(fields: ['email', 'client'])]
 #[ApiResource(
     operations: [
         new Get(security: "is_granted('ROLE_SUPER_ADMIN') or (is_granted('ROLE_ADMIN')  and object.getClient() == user.getClient())"),
@@ -60,7 +62,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
     ],
     normalizationContext: ['groups' => ['user:read']]
 )]
-/* ---------- Filtres applicables à TOUTES les routes ---------- */
 #[ApiFilter(SearchFilter::class, properties: [
     'email'     => 'exact',
     'firstName' => 'ipartial',
@@ -82,18 +83,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:read', 'user:write'])]
+    #[ApiProperty(types: ['https://schema.org/givenName'])]
     private string $firstName;
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:read', 'user:write'])]
+    #[ApiProperty(types: ['https://schema.org/familyName'])]
     private string $lastName;
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:read', 'user:write'])]
+    #[ApiProperty(types: ['https://schema.org/email'])]
     private string $email;
 
     #[ORM\Column(length: 255)]
     #[Groups(['user:write'])]
+    #[ApiProperty(openapiContext: ['type' => 'string', 'writeOnly' => true])]
     private string $password;
 
     #[ORM\Column(enumType: UserRole::class)]
@@ -106,15 +111,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Groups(['user:read'])]
+    #[ApiProperty(types: ['https://schema.org/dateCreated'])]
     private \DateTimeImmutable $createdAt;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Groups(['user:read'])]
+    #[ApiProperty(types: ['https://schema.org/dateModified'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true)]
     #[Groups(['user:read', 'user:write', 'user:write:superadmin'])]
+    #[ApiProperty(readableLink: false, writableLink: true, openapiContext: ['type' => 'string', 'format' => 'iri-reference'])]
+    #[MaxDepth(1)]
     private ?Client $client = null;
 
 

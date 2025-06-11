@@ -30,8 +30,7 @@ final class IriCircularHandler
      */
     public static function handle(object $object): string
     {
-        // sécurité : si, pour une raison quelconque, le service n’a
-        // pas encore été injecté.
+        // sécurité : si, pour une raison quelconque, le service n’a pas encore été injecté.
         if (null === self::$iriConverter) {
             throw new \LogicException('IriCircularHandler not initialized.');
         }

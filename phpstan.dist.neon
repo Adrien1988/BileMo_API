@@ -1,8 +1,18 @@
 parameters:
-    level: 6
+    level: 6                              # tu gardes ton niveau
     paths:
         - bin/
         - config/
         - public/
         - src/
         - tests/
+    #
+    # ➜ NOUVEAU : on demande à PHPStan de scanner le fichier stub
+    #
+    scanFiles:
+        - %currentWorkingDirectory%/phpstan-stubs/api-platform-iri.stub
+        - %currentWorkingDirectory%/phpstan-stubs/api-platform-apiproperty.stub
+
+    # (facultatif) pour masquer d’autres faux-positifs éventuels :
+    # ignoreErrors:
+    #     - '#Dynamic property#'

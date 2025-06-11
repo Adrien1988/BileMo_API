@@ -1,0 +1,21 @@
+<?php
+
+namespace ApiPlatform\Metadata;
+
+#[\Attribute(\Attribute::TARGET_PROPERTY)]
+final class ApiProperty
+{
+    /**
+     * @param array<string>|null $types
+     * @param array<string,mixed>|null $openapiContext
+     * @param bool|null   $readableLink
+     * @param bool|null   $writableLink
+     * … autres paramètres si besoin
+     */
+    public function __construct(
+        ?array $types = null,
+        ?bool $readableLink = null,
+        ?bool $writableLink = null,
+        ?array $openapiContext = null
+    ) {}
+}
