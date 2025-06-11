@@ -85,7 +85,7 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
 
         // User plus ancien – pour le filtre “before”
         $oldUser = (new User())
-            ->setFirstName('SuperOld')   // ← contient « sup »
+            ->setFirstName('SuperOld')
             ->setLastName('Ancien')
             ->setEmail('superold@example.com')
             ->setPassword('password')

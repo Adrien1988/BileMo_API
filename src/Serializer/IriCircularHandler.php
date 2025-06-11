@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\IriConverterInterface;
  */
 final class IriCircularHandler
 {
+
     /** @var IriConverterInterface injecté une seule fois */
     private static ?IriConverterInterface $iriConverter = null;
 
@@ -31,7 +32,7 @@ final class IriCircularHandler
     public static function handle(object $object): string
     {
         // sécurité : si, pour une raison quelconque, le service n’a pas encore été injecté.
-        if (null === self::$iriConverter) {
+        if (self::$iriConverter === null) {
             throw new \LogicException('IriCircularHandler not initialized.');
         }
 

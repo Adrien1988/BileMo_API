@@ -5,16 +5,31 @@ namespace App\Tests\Functional;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\DataFixtures\{ClientFixtures, UserFixtures};
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class ClientFilterTest extends ApiTestCase
 {
-
     use JwtAuthenticatedUserTrait;
 
     /**
      * @var \Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool
      */
     private $databaseTool;
+
+
+    /**
+     * Convertit la query-string d’une URL en tableau clé/valeur
+     * sans employer parse_str().
+     *
+     * @return array<string, string|array<string>> les paramètres de la query-string
+     */
+    private function parseQuery(string $url): array
+    {
+        $queryString = parse_url($url, PHP_URL_QUERY) ?? '';
+
+        return $queryString === '' ? [] : Request::create('/?'.$queryString)->query->all();
+
+    }
 
 
     protected function setUp(): void
@@ -54,8 +69,8 @@ class ClientFilterTest extends ApiTestCase
 
         // S’il existe une page précédente, c’est qu’on n’est pas sur la première page.
         if (isset($view['hydra:previous'])) {
-            parse_str(parse_url($view['@id'], PHP_URL_QUERY), $curr);
-            parse_str(parse_url($view['hydra:previous'], PHP_URL_QUERY), $prev);
+            $curr = $this->parseQuery($view['@id']);
+            $prev = $this->parseQuery($view['hydra:previous']);
 
             // la page courante doit être > page précédente
             $this->assertSame((int) $prev['page'] + 1, (int) $curr['page']);
