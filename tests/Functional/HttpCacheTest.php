@@ -1,18 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\Functional;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
+use App\DataFixtures\ClientFixtures;
+use App\DataFixtures\ProductFixtures;
+use App\DataFixtures\UserFixtures;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Component\HttpFoundation\Response;
-use App\DataFixtures\ClientFixtures;
-use App\DataFixtures\UserFixtures;
-use App\DataFixtures\ProductFixtures;
 
 final class HttpCacheTest extends ApiTestCase
 {
     use JwtAuthenticatedUserTrait;
+
 
     protected function setUp(): void
     {
@@ -23,7 +25,9 @@ final class HttpCacheTest extends ApiTestCase
                 UserFixtures::class,
                 ProductFixtures::class,
             ]);
+
     }
+
 
     public function testEtagIsStableUntilResourceChanges(): void
     {
@@ -31,7 +35,7 @@ final class HttpCacheTest extends ApiTestCase
 
         /* 1. on récupère l’id du premier produit */
         $list = $client->request('GET', '/api/products')->toArray();
-        $id   = $list['hydra:member'][0]['id'];
+        $id = $list['hydra:member'][0]['id'];
 
         /* 2. première lecture → ETag A */
         $first = $client->request('GET', "/api/products/{$id}");
@@ -40,7 +44,7 @@ final class HttpCacheTest extends ApiTestCase
 
         /* 3. deuxième lecture sans modification → même ETag */
         $second = $client->request('GET', "/api/products/{$id}");
-        $etagB  = $second->getHeaders()['etag'][0] ?? null;
+        $etagB = $second->getHeaders()['etag'][0] ?? null;
         $this->assertSame($etagA, $etagB, 'L’ETag doit rester identique tant que la ressource ne change pas');
 
         /* 4. PATCH : on change le prix → ETag différent */
@@ -49,7 +53,10 @@ final class HttpCacheTest extends ApiTestCase
             'json'    => ['price' => '1234.00'],
         ]);
         $updated = $client->request('GET', "/api/products/{$id}");
-        $etagC   = $updated->getHeaders()['etag'][0] ?? null;
+        $etagC = $updated->getHeaders()['etag'][0] ?? null;
         $this->assertNotSame($etagA, $etagC, 'Nouvel ETag attendu après modification');
+
     }
+
+
 }
