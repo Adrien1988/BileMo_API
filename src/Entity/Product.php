@@ -83,6 +83,38 @@ class Product
     #[ApiProperty(types: ['https://schema.org/image'])]
     private string $imageUrl;
 
+    #[ORM\Column(length: 50)]
+    #[Groups(['product:read', 'product:write'])]
+    #[ApiProperty(types: ['https://schema.org/color'])]
+    private string $color;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Groups(['product:read', 'product:write'])]
+    #[Assert\Positive]
+    private int $storageCapacity;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Groups(['product:read', 'product:write'])]
+    #[Assert\Positive]
+    private int $ram;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1)]
+    #[Groups(['product:read', 'product:write'])]
+    #[Assert\Positive]
+    private string $screenSize;
+
+    #[ORM\Column(length: 20)]
+    #[Groups(['product:read', 'product:write'])]
+    private string $cameraResolution;
+
+    #[ORM\Column(length: 30)]
+    #[Groups(['product:read', 'product:write'])]
+    private string $operatingSystem;
+
+    #[ORM\Column(length: 20)]
+    #[Groups(['product:read', 'product:write'])]
+    private string $batteryCapacity;
+
 
     public function getId(): ?int
     {
@@ -165,6 +197,118 @@ class Product
     public function setImageUrl(string $imageUrl): static
     {
         $this->imageUrl = $imageUrl;
+
+        return $this;
+
+    }
+
+
+    public function getColor(): string
+    {
+        return $this->color;
+
+    }
+
+
+    public function setColor(string $color): static
+    {
+        $this->color = $color;
+
+        return $this;
+
+    }
+
+
+    public function getStorageCapacity(): int
+    {
+        return $this->storageCapacity;
+
+    }
+
+
+    public function setStorageCapacity(int $storageCapacity): static
+    {
+        $this->storageCapacity = $storageCapacity;
+
+        return $this;
+
+    }
+
+
+    public function getRam(): int
+    {
+        return $this->ram;
+
+    }
+
+
+    public function setRam(int $ram): static
+    {
+        $this->ram = $ram;
+
+        return $this;
+
+    }
+
+
+    public function getScreenSize(): string
+    {
+        return $this->screenSize;
+
+    }
+
+
+    public function setScreenSize(string $screenSize): static
+    {
+        $this->screenSize = $screenSize;
+
+        return $this;
+
+    }
+
+
+    public function getCameraResolution(): string
+    {
+        return $this->cameraResolution;
+
+    }
+
+
+    public function setCameraResolution(string $cameraResolution): static
+    {
+        $this->cameraResolution = $cameraResolution;
+
+        return $this;
+
+    }
+
+
+    public function getOperatingSystem(): string
+    {
+        return $this->operatingSystem;
+
+    }
+
+
+    public function setOperatingSystem(string $operatingSystem): static
+    {
+        $this->operatingSystem = $operatingSystem;
+
+        return $this;
+
+    }
+
+
+    public function getBatteryCapacity(): string
+    {
+        return $this->batteryCapacity;
+
+    }
+
+
+    public function setBatteryCapacity(string $batteryCapacity): static
+    {
+        $this->batteryCapacity = $batteryCapacity;
 
         return $this;
 
