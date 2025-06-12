@@ -24,7 +24,7 @@ class ProductAdminResourceTest extends ApiTestCase
             ->get(DatabaseToolCollection::class)
             ->get();
 
-        // Même jeux de données que l’autre test + un super-admin dans UserFixtures
+        // Même jeu de données que le reste de la suite + super-admin
         $this->databaseTool->loadFixtures([
             ClientFixtures::class,
             UserFixtures::class,
@@ -37,7 +37,7 @@ class ProductAdminResourceTest extends ApiTestCase
     /** @test */
     public function superAdminCanCrudProduct(): void
     {
-        // E-mail présent dans UserFixtures
+        // Super-admin défini dans UserFixtures
         $client = $this->createAuthenticatedUserClient('superadmin@example.com');
         $headers = [
             'Content-Type' => 'application/ld+json',
@@ -48,11 +48,18 @@ class ProductAdminResourceTest extends ApiTestCase
         $response = $client->request('POST', '/api/products', [
             'headers' => $headers,
             'json'    => [
-                'name'        => 'Galaxy Z-Ultra',
-                'description' => 'Nouvelle phablette pliable',
-                'price'       => '1799.90',
-                'brand'       => 'BileMo',
-                'imageUrl'    => 'https://img.example.com/z-ultra.jpg',
+                'name'             => 'Galaxy Z-Ultra',
+                'description'      => 'Nouvelle phablette pliable',
+                'price'            => '1799.90',
+                'brand'            => 'BileMo',
+                'imageUrl'         => 'https://img.example.com/z-ultra.jpg',
+                'color'            => 'Graphite',
+                'storageCapacity'  => 512,
+                'ram'              => 16,
+                'screenSize'       => '7.2',
+                'cameraResolution' => '200 MP',
+                'operatingSystem'  => 'Android 15',
+                'batteryCapacity'  => '6000 mAh',
             ],
         ]);
         $this->assertResponseStatusCodeSame(201);
@@ -64,7 +71,9 @@ class ProductAdminResourceTest extends ApiTestCase
                 'Content-Type' => 'application/merge-patch+json',
                 'Accept'       => 'application/ld+json',
             ],
-            'json'    => ['price' => '1699.90'],
+            'json' => [
+                'price' => '1699.90',
+            ],
         ]);
         $this->assertResponseStatusCodeSame(200);
 
@@ -87,7 +96,20 @@ class ProductAdminResourceTest extends ApiTestCase
 
         $client->request('POST', '/api/products', [
             'headers' => $headers,
-            'json'    => ['name' => 'Foo', 'price' => '10'],
+            'json'    => [
+                'name'             => 'Foo',
+                'description'      => 'Bar',
+                'price'            => '10.00',
+                'brand'            => 'FooBrand',
+                'imageUrl'         => 'https://example.com/foo.png',
+                'color'            => 'Blue',
+                'storageCapacity'  => 64,
+                'ram'              => 4,
+                'screenSize'       => '6.0',
+                'cameraResolution' => '12 MP',
+                'operatingSystem'  => 'Android 14',
+                'batteryCapacity'  => '4000 mAh',
+            ],
         ]);
         $this->assertResponseStatusCodeSame(403);
 

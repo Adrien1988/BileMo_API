@@ -1,5 +1,7 @@
 <?php
 
+// tests/Functional/ClientFilterTest.php
+
 namespace App\Tests\Functional;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
@@ -18,14 +20,13 @@ class ClientFilterTest extends ApiTestCase
 
 
     /**
-     * Convertit la query-string d’une URL en tableau clé/valeur
-     * sans employer parse_str().
+     * Convert a URL query-string into a key/value array
+     * without relying on parse_str().
      *
-     * @return array<string, string|array<string>> les paramètres de la query-string
+     * @return array<string, string|array<string>>
      */
     private function parseQuery(string $url): array
     {
-        // On repère le premier « ? » pour isoler la query-string.
         $qPos = strpos($url, '?');
         $queryString = $qPos === false ? '' : substr($url, $qPos + 1);
 
@@ -37,9 +38,12 @@ class ClientFilterTest extends ApiTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->databaseTool = self::getContainer()
             ->get(DatabaseToolCollection::class)
             ->get();
+
+        // Load reference fixtures
         $this->databaseTool->loadFixtures([
             ClientFixtures::class,
             UserFixtures::class,
@@ -60,21 +64,30 @@ class ClientFilterTest extends ApiTestCase
                 'itemsPerPage' => 5,
                 'page'         => 2,
             ],
+            'headers' => ['Accept' => 'application/ld+json'],
         ])->toArray();
 
+        /* ---------- Assert every returned client is inactive ---------- */
         foreach ($json['hydra:member'] as $clientData) {
             $this->assertFalse($clientData['isActive']);
+
+            // New fields exist and are non-empty (fixtures guarantee this)
+            $this->assertArrayHasKey('website', $clientData);
+            $this->assertArrayHasKey('contactEmail', $clientData);
+            $this->assertArrayHasKey('contactPhone', $clientData);
+            $this->assertArrayHasKey('address', $clientData);
         }
 
+        /* ---------- Check hydra:view pagination data ---------- */
         $this->assertArrayHasKey('hydra:view', $json);
         $view = $json['hydra:view'];
 
-        // S’il existe une page précédente, c’est qu’on n’est pas sur la première page.
+        // If a previous page exists we must not be on the first page
         if (isset($view['hydra:previous'])) {
             $curr = $this->parseQuery($view['@id']);
             $prev = $this->parseQuery($view['hydra:previous']);
 
-            // la page courante doit être > page précédente
+            // Current page should be exactly one greater than previous
             $this->assertSame((int) $prev['page'] + 1, (int) $curr['page']);
         }
 

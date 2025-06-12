@@ -133,8 +133,7 @@ final class ClientUserResourceTest extends ApiTestCase
         $client = $this->createAuthenticatedUserClient('superadmin@example.com', 'supersecret');
 
         // Liste clients → 200 (≥ 2)
-        $data = $client->request('GET', '/api/clients')
-            ->toArray();
+        $data = $client->request('GET', '/api/clients')->toArray();
         $this->assertResponseIsSuccessful();
         $this->assertGreaterThanOrEqual(2, \count($data['hydra:member']));
 
@@ -170,8 +169,7 @@ final class ClientUserResourceTest extends ApiTestCase
         // Admin Globex
         $client = $this->createAuthenticatedUserClient('admin@other.com', 'adminsecret');
 
-        // @var ClientRepository $repo
-
+        /** @var ClientRepository $repo */
         $repo = static::getContainer()->get(ClientRepository::class);
 
         $my = $repo->findOneBy(['name' => 'Globex']);

@@ -13,10 +13,29 @@ class ClientTest extends TestCase
 
     public function testFullEntityBehaviour(): void
     {
+        /* --------- Instanciation et setters --------- */
+        $contractStart = new \DateTimeImmutable('2024-01-01');
+        $contractEnd = new \DateTimeImmutable('2026-01-01');
+
         $client = (new Client())
             ->setName('ACME')
-            ->setIsActive(false);
+            ->setIsActive(false)
+            ->setWebsite('https://acme.example')
+            ->setContactEmail('contact@acme.example')
+            ->setContactPhone('+33123456789')
+            ->setAddress("1 rue de la Paix\n75002 Paris")
+            ->setContractStart($contractStart)
+            ->setContractEnd($contractEnd);
 
+        /* --------- Asserts sur les nouveaux champs --------- */
+        self::assertSame('https://acme.example', $client->getWebsite());
+        self::assertSame('contact@acme.example', $client->getContactEmail());
+        self::assertSame('+33123456789', $client->getContactPhone());
+        self::assertSame("1 rue de la Paix\n75002 Paris", $client->getAddress());
+        self::assertSame($contractStart, $client->getContractStart());
+        self::assertSame($contractEnd, $client->getContractEnd());
+
+        /* --------- Asserts pré-existants --------- */
         self::assertSame('ACME', $client->getName());
         self::assertFalse($client->isActive());
 
@@ -29,6 +48,7 @@ class ClientTest extends TestCase
         $client->setUpdatedAt($now);
         self::assertSame($now, $client->getUpdatedAt());
 
+        /* --------- Gestion de la relation avec User --------- */
         $user = (new User())
             ->setFirstName('Alice')
             ->setLastName('Smith')

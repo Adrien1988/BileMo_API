@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[ORM\Table(name: 'client')]
@@ -58,6 +59,32 @@ class Client
     #[ApiProperty(types: ['https://schema.org/name'])]
     private string $name;
 
+    #[ORM\Column(length: 255)]
+    #[Groups(['client:read', 'client:write'])]
+    #[Assert\Url]
+    private string $website;
+
+    #[ORM\Column(length: 180)]
+    #[Groups(['client:read', 'client:write'])]
+    #[Assert\Email]
+    private string $contactEmail;
+
+    #[ORM\Column(length: 30)]
+    #[Groups(['client:read', 'client:write'])]
+    private string $contactPhone;
+
+    #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['client:read', 'client:write'])]
+    private string $address;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(['client:read', 'client:write'])]
+    private ?\DateTimeImmutable $contractStart = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    #[Groups(['client:read', 'client:write'])]
+    private ?\DateTimeImmutable $contractEnd = null;
+
     #[ORM\Column(options: ['default' => true])]
     #[Groups(['client:read', 'client:write'])]
     #[ApiProperty(types: ['https://schema.org/active'])]
@@ -86,6 +113,7 @@ class Client
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->contractStart = new \DateTimeImmutable();
         $this->users = new ArrayCollection();
 
     }
@@ -108,6 +136,102 @@ class Client
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+
+    }
+
+
+    public function getWebsite(): string
+    {
+        return $this->website;
+
+    }
+
+
+    public function setWebsite(string $website): static
+    {
+        $this->website = $website;
+
+        return $this;
+
+    }
+
+
+    public function getContactEmail(): string
+    {
+        return $this->contactEmail;
+
+    }
+
+
+    public function setContactEmail(string $contactEmail): static
+    {
+        $this->contactEmail = $contactEmail;
+
+        return $this;
+
+    }
+
+
+    public function getContactPhone(): string
+    {
+        return $this->contactPhone;
+
+    }
+
+
+    public function setContactPhone(string $contactPhone): static
+    {
+        $this->contactPhone = $contactPhone;
+
+        return $this;
+
+    }
+
+
+    public function getAddress(): string
+    {
+        return $this->address;
+
+    }
+
+
+    public function setAddress(string $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+
+    }
+
+
+    public function getContractStart(): ?\DateTimeImmutable
+    {
+        return $this->contractStart;
+
+    }
+
+
+    public function setContractStart(?\DateTimeImmutable $contractStart): static
+    {
+        $this->contractStart = $contractStart;
+
+        return $this;
+
+    }
+
+
+    public function getContractEnd(): ?\DateTimeImmutable
+    {
+        return $this->contractEnd;
+
+    }
+
+
+    public function setContractEnd(?\DateTimeImmutable $contractEnd): static
+    {
+        $this->contractEnd = $contractEnd;
 
         return $this;
 

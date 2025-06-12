@@ -48,7 +48,14 @@ class ClientAdminResourceTest extends ApiTestCase
         /* --- CREATE --- */
         $response = $client->request('POST', '/api/clients', [
             'headers' => $headers,
-            'json'    => ['name' => 'Partner Z'],
+            'json'    => [
+                'name'          => 'Partner Z',
+                'website'       => 'https://partner-z.example',
+                'contactEmail'  => 'contact@partner-z.example',
+                'contactPhone'  => '+33102030405',
+                'address'       => "42 avenue de l’API\n75010 Paris",
+                'contractStart' => '2025-01-01',
+            ],
         ]);
         $this->assertResponseStatusCodeSame(201);
         $iri = $response->toArray()['@id'];
@@ -59,7 +66,10 @@ class ClientAdminResourceTest extends ApiTestCase
                 'Content-Type' => 'application/merge-patch+json',
                 'Accept'       => 'application/ld+json',
             ],
-            'json'    => ['name' => 'Partner Z - Updated'],
+            'json' => [
+                'name'         => 'Partner Z – Updated',
+                'contactEmail' => 'new-contact@partner-z.example',
+            ],
         ]);
         $this->assertResponseStatusCodeSame(200);
 
@@ -81,7 +91,14 @@ class ClientAdminResourceTest extends ApiTestCase
 
         $client->request('POST', '/api/clients', [
             'headers' => $headers,
-            'json'    => ['name' => 'Forbidden Corp'],
+            'json'    => [
+                'name'          => 'Forbidden Corp',
+                'website'       => 'https://forbidden.example',
+                'contactEmail'  => 'contact@forbidden.example',
+                'contactPhone'  => '+33111111111',
+                'address'       => '1 rue Interdite, 75000 Paris',
+                'contractStart' => '2025-01-01',
+            ],
         ]);
         $this->assertResponseStatusCodeSame(403);
 
@@ -91,7 +108,7 @@ class ClientAdminResourceTest extends ApiTestCase
     /** @test */
     public function duplicateNameReturns422(): void
     {
-        // « Client A » est déjà créé par ClientFixtures
+        // « Acme Corp » existe déjà via les fixtures
         $client = $this->createAuthenticatedUserClient('superadmin@example.com');
         $headers = [
             'Content-Type' => 'application/ld+json',
@@ -100,7 +117,14 @@ class ClientAdminResourceTest extends ApiTestCase
 
         $client->request('POST', '/api/clients', [
             'headers' => $headers,
-            'json'    => ['name' => 'Acme Corp'],
+            'json'    => [
+                'name'          => 'Acme Corp',
+                'website'       => 'https://duplicate.example',
+                'contactEmail'  => 'dup@example.com',
+                'contactPhone'  => '+33199999999',
+                'address'       => 'Dup street',
+                'contractStart' => '2025-01-01',
+            ],
         ]);
         $this->assertResponseStatusCodeSame(422);
 
