@@ -1,0 +1,2666 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Hello API Platform",
+        "description": "",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "/api/clients": {
+            "get": {
+                "operationId": "api_clients_get_collection",
+                "tags": [
+                    "Client"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Client.jsonld-client.read"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "summary": "Retrieves the collection of Client resources.",
+                "description": "Retrieves the collection of Client resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "minimum": 0
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "pagination",
+                        "in": "query",
+                        "description": "Enable or disable pagination",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "isActive",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "isActive[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "boolean"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[name]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[createdAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[before]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[strictly_before]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[after]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[strictly_after]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "post": {
+                "operationId": "api_clients_post",
+                "tags": [
+                    "Client"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Client resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Client.jsonld-client.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "summary": "Creates a Client resource.",
+                "description": "Creates a Client resource.",
+                "parameters": [],
+                "requestBody": {
+                    "description": "The new Client resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Client.jsonld-client.write"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            }
+        },
+        "/api/clients/{id}": {
+            "get": {
+                "operationId": "api_clients_id_get",
+                "tags": [
+                    "Client"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Client.jsonld-client.read"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a Client resource.",
+                "description": "Retrieves a Client resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "api_clients_id_delete",
+                "tags": [
+                    "Client"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Client resource deleted"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Removes the Client resource.",
+                "description": "Removes the Client resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "patch": {
+                "operationId": "api_clients_id_patch",
+                "tags": [
+                    "Client"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Client.jsonld-client.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Updates the Client resource.",
+                "description": "Updates the Client resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated Client resource",
+                    "content": {
+                        "application/merge-patch+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Client-client.write"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            }
+        },
+        "/api/login_check": {
+            "post": {
+                "operationId": "login_check_post",
+                "tags": [
+                    "Login Check"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User token created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "readOnly": true,
+                                            "type": "string",
+                                            "nullable": false
+                                        }
+                                    },
+                                    "required": [
+                                        "token"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Creates a user token.",
+                "description": "Creates a user token.",
+                "requestBody": {
+                    "description": "The login data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "nullable": false
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "nullable": false
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    },
+                    "required": true
+                }
+            }
+        },
+        "/api/products": {
+            "get": {
+                "operationId": "api_products_get_collection",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Product.jsonld-product.read"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "summary": "Retrieves the collection of Product resources.",
+                "description": "Retrieves the collection of Product resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 30,
+                            "minimum": 0
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "pagination",
+                        "in": "query",
+                        "description": "Enable or disable pagination",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[name]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[price]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "price[between]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "price[gt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "price[gte]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "price[lt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "price[lte]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "brand",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "post": {
+                "operationId": "api_products_post",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Product resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product.jsonld-product.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "summary": "Creates a Product resource.",
+                "description": "Creates a Product resource.",
+                "parameters": [],
+                "requestBody": {
+                    "description": "The new Product resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product.jsonld-product.write"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            }
+        },
+        "/api/products/{id}": {
+            "get": {
+                "operationId": "api_products_id_get",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product.jsonld-product.read"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a Product resource.",
+                "description": "Retrieves a Product resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "api_products_id_delete",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Product resource deleted"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Removes the Product resource.",
+                "description": "Removes the Product resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "patch": {
+                "operationId": "api_products_id_patch",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product.jsonld-product.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Updates the Product resource.",
+                "description": "Updates the Product resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated Product resource",
+                    "content": {
+                        "application/merge-patch+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product-product.write"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            }
+        },
+        "/api/clients/{id}/users": {
+            "get": {
+                "operationId": "api_clients_idusers_get_collection",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User.jsonld-user.read"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "summary": "Retrieves the collection of User resources.",
+                "description": "Retrieves the collection of User resources.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "minimum": 0
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "pagination",
+                        "in": "query",
+                        "description": "Enable or disable pagination",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "email[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "firstName",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[before]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[strictly_before]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[after]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[strictly_after]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[firstName]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[lastName]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[email]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[createdAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            }
+        },
+        "/api/users": {
+            "get": {
+                "operationId": "api_users_get_collection",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User.jsonld-user.read"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            },
+                                            "example": {
+                                                "@id": "string",
+                                                "type": "string",
+                                                "hydra:first": "string",
+                                                "hydra:last": "string",
+                                                "hydra:previous": "string",
+                                                "hydra:next": "string"
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "summary": "Retrieves the collection of User resources.",
+                "description": "Retrieves the collection of User resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "minimum": 0
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "pagination",
+                        "in": "query",
+                        "description": "Enable or disable pagination",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "email[]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "style": "form",
+                        "explode": true,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "firstName",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[before]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[strictly_before]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[after]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "createdAt[strictly_after]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[firstName]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[lastName]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[email]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "order[createdAt]",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "asc",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "post": {
+                "operationId": "api_users_post",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.jsonld-user.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                },
+                "summary": "Creates a User resource.",
+                "description": "Creates a User resource.",
+                "parameters": [],
+                "requestBody": {
+                    "description": "The new User resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User.jsonld-user.write_user.write.superadmin"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            }
+        },
+        "/api/users/{id}": {
+            "get": {
+                "operationId": "api_users_id_get",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.jsonld-user.read"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a User resource.",
+                "description": "Retrieves a User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "put": {
+                "operationId": "api_users_id_put",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User resource updated",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.jsonld-user.read"
+                                }
+                            }
+                        },
+                        "links": {}
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Replaces the User resource.",
+                "description": "Replaces the User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "requestBody": {
+                    "description": "The updated User resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User.jsonld"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "api_users_id_delete",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User resource deleted"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Removes the User resource.",
+                "description": "Removes the User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Client-client.write": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "name": {
+                        "externalDocs": {
+                            "url": "https://schema.org/name"
+                        },
+                        "type": "string"
+                    },
+                    "website": {
+                        "format": "uri",
+                        "externalDocs": {
+                            "url": "https://schema.org/url"
+                        },
+                        "type": "string"
+                    },
+                    "contactEmail": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "https://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "contactPhone": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "contractStart": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "contractEnd": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "isActive": {
+                        "externalDocs": {
+                            "url": "https://schema.org/active"
+                        },
+                        "default": true,
+                        "example": true,
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Client.jsonld-client.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "name": {
+                        "externalDocs": {
+                            "url": "https://schema.org/name"
+                        },
+                        "type": "string"
+                    },
+                    "website": {
+                        "format": "uri",
+                        "externalDocs": {
+                            "url": "https://schema.org/url"
+                        },
+                        "type": "string"
+                    },
+                    "contactEmail": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "https://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "contactPhone": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "contractStart": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "contractEnd": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "isActive": {
+                        "externalDocs": {
+                            "url": "https://schema.org/active"
+                        },
+                        "default": true,
+                        "example": true,
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "externalDocs": {
+                            "url": "https://schema.org/dateCreated"
+                        },
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "externalDocs": {
+                            "url": "https://schema.org/dateModified"
+                        },
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "iri-reference"
+                        }
+                    }
+                }
+            },
+            "Client.jsonld-client.write": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "name": {
+                        "externalDocs": {
+                            "url": "https://schema.org/name"
+                        },
+                        "type": "string"
+                    },
+                    "website": {
+                        "format": "uri",
+                        "externalDocs": {
+                            "url": "https://schema.org/url"
+                        },
+                        "type": "string"
+                    },
+                    "contactEmail": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "https://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "contactPhone": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "contractStart": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "contractEnd": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "isActive": {
+                        "externalDocs": {
+                            "url": "https://schema.org/active"
+                        },
+                        "default": true,
+                        "example": true,
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Product-product.write": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "externalDocs": {
+                            "url": "https://schema.org/name"
+                        },
+                        "type": "string"
+                    },
+                    "description": {
+                        "externalDocs": {
+                            "url": "https://schema.org/description"
+                        },
+                        "type": "string"
+                    },
+                    "price": {
+                        "externalDocs": {
+                            "url": "https://schema.org/price"
+                        },
+                        "type": "string"
+                    },
+                    "brand": {
+                        "externalDocs": {
+                            "url": "https://schema.org/brand"
+                        },
+                        "type": "string"
+                    },
+                    "imageUrl": {
+                        "externalDocs": {
+                            "url": "https://schema.org/image"
+                        },
+                        "type": "string"
+                    },
+                    "color": {
+                        "externalDocs": {
+                            "url": "https://schema.org/color"
+                        },
+                        "type": "string"
+                    },
+                    "storageCapacity": {
+                        "exclusiveMinimum": 0,
+                        "type": "integer"
+                    },
+                    "ram": {
+                        "exclusiveMinimum": 0,
+                        "type": "integer"
+                    },
+                    "screenSize": {
+                        "type": "string"
+                    },
+                    "cameraResolution": {
+                        "type": "string"
+                    },
+                    "operatingSystem": {
+                        "type": "string"
+                    },
+                    "batteryCapacity": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Product.jsonld-product.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "name": {
+                        "externalDocs": {
+                            "url": "https://schema.org/name"
+                        },
+                        "type": "string"
+                    },
+                    "description": {
+                        "externalDocs": {
+                            "url": "https://schema.org/description"
+                        },
+                        "type": "string"
+                    },
+                    "price": {
+                        "externalDocs": {
+                            "url": "https://schema.org/price"
+                        },
+                        "type": "string"
+                    },
+                    "brand": {
+                        "externalDocs": {
+                            "url": "https://schema.org/brand"
+                        },
+                        "type": "string"
+                    },
+                    "imageUrl": {
+                        "externalDocs": {
+                            "url": "https://schema.org/image"
+                        },
+                        "type": "string"
+                    },
+                    "color": {
+                        "externalDocs": {
+                            "url": "https://schema.org/color"
+                        },
+                        "type": "string"
+                    },
+                    "storageCapacity": {
+                        "exclusiveMinimum": 0,
+                        "type": "integer"
+                    },
+                    "ram": {
+                        "exclusiveMinimum": 0,
+                        "type": "integer"
+                    },
+                    "screenSize": {
+                        "type": "string"
+                    },
+                    "cameraResolution": {
+                        "type": "string"
+                    },
+                    "operatingSystem": {
+                        "type": "string"
+                    },
+                    "batteryCapacity": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name"
+                ]
+            },
+            "Product.jsonld-product.write": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "externalDocs": {
+                            "url": "https://schema.org/name"
+                        },
+                        "type": "string"
+                    },
+                    "description": {
+                        "externalDocs": {
+                            "url": "https://schema.org/description"
+                        },
+                        "type": "string"
+                    },
+                    "price": {
+                        "externalDocs": {
+                            "url": "https://schema.org/price"
+                        },
+                        "type": "string"
+                    },
+                    "brand": {
+                        "externalDocs": {
+                            "url": "https://schema.org/brand"
+                        },
+                        "type": "string"
+                    },
+                    "imageUrl": {
+                        "externalDocs": {
+                            "url": "https://schema.org/image"
+                        },
+                        "type": "string"
+                    },
+                    "color": {
+                        "externalDocs": {
+                            "url": "https://schema.org/color"
+                        },
+                        "type": "string"
+                    },
+                    "storageCapacity": {
+                        "exclusiveMinimum": 0,
+                        "type": "integer"
+                    },
+                    "ram": {
+                        "exclusiveMinimum": 0,
+                        "type": "integer"
+                    },
+                    "screenSize": {
+                        "type": "string"
+                    },
+                    "cameraResolution": {
+                        "type": "string"
+                    },
+                    "operatingSystem": {
+                        "type": "string"
+                    },
+                    "batteryCapacity": {
+                        "type": "string"
+                    }
+                }
+            },
+            "User.jsonld": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "externalDocs": {
+                            "url": "https://schema.org/givenName"
+                        },
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "externalDocs": {
+                            "url": "https://schema.org/familyName"
+                        },
+                        "type": "string"
+                    },
+                    "email": {
+                        "externalDocs": {
+                            "url": "https://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "writeOnly": true
+                    },
+                    "role": {
+                        "default": "ROLE_USER",
+                        "example": "ROLE_USER",
+                        "type": "string",
+                        "enum": [
+                            "ROLE_USER",
+                            "ROLE_ADMIN",
+                            "ROLE_SUPER_ADMIN"
+                        ]
+                    },
+                    "isActive": {
+                        "default": true,
+                        "example": true,
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "externalDocs": {
+                            "url": "https://schema.org/dateCreated"
+                        },
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "externalDocs": {
+                            "url": "https://schema.org/dateModified"
+                        },
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "client": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    },
+                    "roles": {
+                        "readOnly": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "active": {
+                        "readOnly": true,
+                        "type": "boolean"
+                    },
+                    "userIdentifier": {
+                        "readOnly": true,
+                        "type": "string"
+                    }
+                }
+            },
+            "User.jsonld-user.read": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "externalDocs": {
+                            "url": "https://schema.org/givenName"
+                        },
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "externalDocs": {
+                            "url": "https://schema.org/familyName"
+                        },
+                        "type": "string"
+                    },
+                    "email": {
+                        "externalDocs": {
+                            "url": "https://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "role": {
+                        "default": "ROLE_USER",
+                        "example": "ROLE_USER",
+                        "type": "string",
+                        "enum": [
+                            "ROLE_USER",
+                            "ROLE_ADMIN",
+                            "ROLE_SUPER_ADMIN"
+                        ]
+                    },
+                    "isActive": {
+                        "default": true,
+                        "example": true,
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "readOnly": true,
+                        "externalDocs": {
+                            "url": "https://schema.org/dateCreated"
+                        },
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "externalDocs": {
+                            "url": "https://schema.org/dateModified"
+                        },
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "date-time"
+                    },
+                    "client": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                }
+            },
+            "User.jsonld-user.write_user.write.superadmin": {
+                "type": "object",
+                "description": "",
+                "deprecated": false,
+                "properties": {
+                    "firstName": {
+                        "externalDocs": {
+                            "url": "https://schema.org/givenName"
+                        },
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "externalDocs": {
+                            "url": "https://schema.org/familyName"
+                        },
+                        "type": "string"
+                    },
+                    "email": {
+                        "externalDocs": {
+                            "url": "https://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "writeOnly": true
+                    },
+                    "role": {
+                        "default": "ROLE_USER",
+                        "example": "ROLE_USER",
+                        "type": "string",
+                        "enum": [
+                            "ROLE_USER",
+                            "ROLE_ADMIN",
+                            "ROLE_SUPER_ADMIN"
+                        ]
+                    },
+                    "isActive": {
+                        "default": true,
+                        "example": true,
+                        "type": "boolean"
+                    },
+                    "client": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                }
+            }
+        },
+        "responses": {},
+        "parameters": {},
+        "examples": {},
+        "requestBodies": {},
+        "headers": {},
+        "securitySchemes": {
+            "JWT": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "security": [
+        {
+            "JWT": []
+        }
+    ],
+    "tags": [],
+    "webhooks": {}
+}
