@@ -44,6 +44,9 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setPassword($this->hasher->hashPassword($superAdmin, 'supersecret'))
             ->setRole(UserRole::ROLE_SUPER_ADMIN)
             ->setClient(null);
+        $refl = new \ReflectionProperty(User::class, 'createdAt');
+        $refl->setAccessible(true);
+        $refl->setValue($superAdmin, new \DateTimeImmutable('2024-12-31'));
         $manager->persist($superAdmin);
 
         // ----- ADMIN PRINCIPAL -----
@@ -79,6 +82,28 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setClient($client);
         $manager->persist($apiUser);
         $this->addReference(self::REF_API_USER, $apiUser);
+
+        // User plus ancien – pour le filtre “before”
+        $oldUser = (new User())
+            ->setFirstName('SuperOld')   // ← contient « sup »
+            ->setLastName('Ancien')
+            ->setEmail('superold@example.com')
+            ->setPassword('password')
+            ->setRole(UserRole::ROLE_USER);
+
+        $refl = new \ReflectionProperty(User::class, 'createdAt');
+        $refl->setAccessible(true);
+        $refl->setValue($oldUser, new \DateTimeImmutable('2024-01-01'));
+        $manager->persist($oldUser);
+
+        $veryOld = (new User())
+            ->setFirstName('Superseded')
+            ->setLastName('Vintage')
+            ->setEmail('superseded@example.com')
+            ->setPassword('password')
+            ->setRole(UserRole::ROLE_USER);
+        $refl->setValue($veryOld, new \DateTimeImmutable('2024-06-01'));
+        $manager->persist($veryOld);
 
         // ----- Users standards pour le client principal -----
         for ($i = 0; $i < 5; ++$i) {
