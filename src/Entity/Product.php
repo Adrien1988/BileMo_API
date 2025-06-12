@@ -6,6 +6,7 @@ use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -58,23 +59,28 @@ class Product
     #[ORM\Column(length: 255)]
     #[Groups(['product:read', 'product:write'])]
     #[Assert\NotBlank(message: 'Le nom est obligatoire.')]
+    #[ApiProperty(types: ['https://schema.org/name'])]
     private string $name;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['product:read', 'product:write'])]
+    #[ApiProperty(types: ['https://schema.org/description'])]
     private string $description;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     #[Groups(['product:read', 'product:write'])]
     #[Assert\Positive(message: 'Le prix doit être strictement positif.')]
+    #[ApiProperty(types: ['https://schema.org/price'])]
     private string $price;
 
     #[ORM\Column(length: 255)]
     #[Groups(['product:read', 'product:write'])]
+    #[ApiProperty(types: ['https://schema.org/brand'])]
     private string $brand;
 
     #[ORM\Column(length: 255)]
     #[Groups(['product:read', 'product:write'])]
+    #[ApiProperty(types: ['https://schema.org/image'])]
     private string $imageUrl;
 
 

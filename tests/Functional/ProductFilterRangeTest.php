@@ -5,16 +5,35 @@ namespace App\Tests\Functional;
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\DataFixtures\{ClientFixtures, ProductFixtures, UserFixtures};
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductFilterRangeTest extends ApiTestCase
 {
-
     use JwtAuthenticatedUserTrait;
 
     /**
      * @var \Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool
      */
     private $databaseTool;
+
+
+    /**
+     * Convertit la query-string d’une URL en tableau clé/valeur, sans parse_str().
+     *
+     * @return array<string, string|array<string>>
+     */
+    private function parseQuery(string $url): array
+    {
+        // On repère le premier « ? » pour isoler la query-string.
+        $queryString = '';
+        $qPos = strpos($url, '?');
+        if ($qPos !== false) {
+            $queryString = substr($url, $qPos + 1);
+        }
+
+        return $queryString === '' ? [] : Request::create('/?'.$queryString)->query->all();
+
+    }
 
 
     protected function setUp(): void
@@ -55,7 +74,7 @@ class ProductFilterRangeTest extends ApiTestCase
         $this->assertCount(5, $json['hydra:member']);
         $this->assertGreaterThanOrEqual(5, $json['hydra:totalItems']);
 
-        // 2) Tous les prix < 500
+        // 2) Tous les prix < 700
         foreach ($json['hydra:member'] as $product) {
             $this->assertLessThan(700, (float) $product['price']);
         }
@@ -65,7 +84,8 @@ class ProductFilterRangeTest extends ApiTestCase
         $this->assertArrayHasKey('hydra:first', $view);
         $this->assertArrayHasKey('hydra:last', $view);
         $this->assertArrayHasKey('hydra:next', $view);
-        parse_str(parse_url($view['@id'], PHP_URL_QUERY), $q);
+
+        $q = $this->parseQuery($view['@id']);
         $this->assertSame(1, (int) ($q['page'] ?? 1));
 
     }

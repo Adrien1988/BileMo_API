@@ -1,0 +1,14 @@
+<?php
+
+namespace ApiPlatform\Metadata;
+
+/**
+ * Stub minimale lue uniquement par PHPStan.
+ * Le runtime API-Platform 3 expose bien cette méthode,
+ * mais la signature n’est pas encore dans la lib livrée.
+ */
+interface IriConverterInterface
+{
+    /** @return string */
+    public function getIriFromResource(object $resource);
+}

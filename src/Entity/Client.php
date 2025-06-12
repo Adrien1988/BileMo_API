@@ -6,6 +6,7 @@ use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -19,6 +20,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Serializer\Attribute\MaxDepth;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[ORM\Table(name: 'client')]
@@ -35,7 +37,6 @@ use Symfony\Component\Serializer\Attribute\Groups;
     denormalizationContext: ['groups' => ['client:write']],
     validationContext: ['groups' => ['Default', 'client:write']]
 )]
-/* -------------- Filtres -------------- */
 #[ApiFilter(SearchFilter::class, properties: [
     'name'     => 'ipartial',
     'isActive' => 'exact',
@@ -48,58 +49,37 @@ use Symfony\Component\Serializer\Attribute\Groups;
 class Client
 {
 
-    /**
-     * The unique identifier of the client.
-     *
-     * @var int|null
-     */
     #[ORM\Id, ORM\GeneratedValue, ORM\Column]
     #[Groups(['client:read'])]
     private ?int $id = null;
 
-    /**
-     * Human‑readable name of the client.
-     *
-     * @var string
-     */
     #[ORM\Column(length: 255, unique:true)]
     #[Groups(['client:read', 'client:write'])]
+    #[ApiProperty(types: ['https://schema.org/name'])]
     private string $name;
 
-    /**
-     * Whether the client is active.
-     *
-     * @var bool
-     */
     #[ORM\Column(options: ['default' => true])]
     #[Groups(['client:read', 'client:write'])]
+    #[ApiProperty(types: ['https://schema.org/active'])]
     private bool $isActive = true;
 
-    /**
-     * Timestamp when the client was created.
-     *
-     * @var \DateTimeImmutable
-     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     #[Groups(['client:read'])]
+    #[ApiProperty(types: ['https://schema.org/dateCreated'])]
     private \DateTimeImmutable $createdAt;
 
-    /**
-     * Timestamp when the client was last updated.
-     *
-     * @var \DateTimeImmutable|null
-     */
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     #[Groups(['client:read'])]
+    #[ApiProperty(types: ['https://schema.org/dateModified'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     /**
-     * Users associated with the client.
-     *
      * @var Collection<int, User>
      */
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: User::class, orphanRemoval: true, cascade: ['persist'])]
+    #[MaxDepth(1)]
     #[Groups(['client:read'])]
+    #[ApiProperty(readableLink: false, openapiContext: ['type' => 'array', 'items' => ['type' => 'string', 'format' => 'iri-reference']])]
     private Collection $users;
 
 
