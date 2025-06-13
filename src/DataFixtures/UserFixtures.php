@@ -88,7 +88,7 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setFirstName('SuperOld')
             ->setLastName('Ancien')
             ->setEmail('superold@example.com')
-            ->setPassword('password')
+            ->setPassword($this->hasher->hashPassword($apiUser,'password'))
             ->setRole(UserRole::ROLE_USER);
 
         $refl = new \ReflectionProperty(User::class, 'createdAt');
@@ -100,7 +100,7 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
             ->setFirstName('Superseded')
             ->setLastName('Vintage')
             ->setEmail('superseded@example.com')
-            ->setPassword('password')
+            ->setPassword($this->hasher->hashPassword($apiUser,'password'))
             ->setRole(UserRole::ROLE_USER);
         $refl->setValue($veryOld, new \DateTimeImmutable('2024-06-01'));
         $manager->persist($veryOld);
