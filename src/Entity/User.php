@@ -11,7 +11,6 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Enum\UserRole;
@@ -43,24 +42,6 @@ use Symfony\Component\Serializer\Attribute\MaxDepth;
     ],
     normalizationContext: ['groups' => ['user:read']],
 
-)]
-#[ApiResource(
-    uriTemplate: '/clients/{id}/users',
-    uriVariables: [
-        'id' => new Link(fromClass: Client::class, fromProperty: 'users'),
-    ],
-    operations: [
-        new GetCollection(
-            security: "
-            is_granted('ROLE_SUPER_ADMIN') or (
-            is_granted('ROLE_ADMIN') 
-            and user.getClient() 
-            and user.getClient().getId() == request.attributes.get('id')
-            )
-            "
-        ),
-    ],
-    normalizationContext: ['groups' => ['user:read']]
 )]
 #[ApiFilter(SearchFilter::class, properties: [
     'email'     => 'exact',

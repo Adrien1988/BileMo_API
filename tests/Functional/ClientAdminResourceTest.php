@@ -61,14 +61,18 @@ class ClientAdminResourceTest extends ApiTestCase
         $iri = $response->toArray()['@id'];
 
         /* --- UPDATE --- */
-        $client->request('PATCH', $iri, [
+        $client->request('PUT', $iri, [
             'headers' => [
-                'Content-Type' => 'application/merge-patch+json',
+                'Content-Type' => 'application/ld+json',
                 'Accept'       => 'application/ld+json',
             ],
             'json' => [
-                'name'         => 'Partner Z – Updated',
-                'contactEmail' => 'new-contact@partner-z.example',
+                'name'          => 'Partner Z – Updated',
+                'website'       => 'https://partner-z.example',
+                'contactEmail'  => 'new-contact@partner-z.example',
+                'contactPhone'  => '+33102030405',
+                'address'       => "42 avenue de l’API\n75010 Paris",
+                'contractStart' => '2025-01-01',
             ],
         ]);
         $this->assertResponseStatusCodeSame(200);

@@ -32,3 +32,6 @@ api_platform:
 
     keep_legacy_inflector: false
     use_symfony_listeners: true
+    openapi:
+        swagger_ui_extra_configuration:
+            persistAuthorization: true

@@ -47,11 +47,30 @@ final class HttpCacheTest extends ApiTestCase
         $etagB = $second->getHeaders()['etag'][0] ?? null;
         $this->assertSame($etagA, $etagB, 'L’ETag doit rester identique tant que la ressource ne change pas');
 
-        /* 4. PATCH : on change le prix → ETag différent */
-        $client->request('PATCH', "/api/products/{$id}", [
-            'headers' => ['Content-Type' => 'application/merge-patch+json'],
-            'json'    => ['price' => '1234.00'],
+        /* 4. PUT : on change le prix → ETag différent */
+        $product = $first->toArray();
+
+        $client->request('PUT', "/api/products/{$id}", [
+            'headers' => [
+                'Content-Type' => 'application/ld+json',
+                'Accept'       => 'application/ld+json',
+            ],
+            'json'    => [
+                'name'              => $product['name'],
+                'description'       => $product['description'],
+                'price'             => '1234.00', // on modifie ici
+                'brand'             => $product['brand'],
+                'imageUrl'          => $product['imageUrl'],
+                'color'             => $product['color'],
+                'storageCapacity'   => $product['storageCapacity'],
+                'ram'               => $product['ram'],
+                'screenSize'        => $product['screenSize'],
+                'cameraResolution'  => $product['cameraResolution'],
+                'operatingSystem'   => $product['operatingSystem'],
+                'batteryCapacity'   => $product['batteryCapacity'],
+            ],
         ]);
+
         $updated = $client->request('GET', "/api/products/{$id}");
         $etagC = $updated->getHeaders()['etag'][0] ?? null;
         $this->assertNotSame($etagA, $etagC, 'Nouvel ETag attendu après modification');

@@ -66,13 +66,27 @@ class ProductAdminResourceTest extends ApiTestCase
         $iri = $response->toArray()['@id'];
 
         /* --- UPDATE --- */
-        $client->request('PATCH', $iri, [
+        // On récupère l'état actuel pour faire un PUT complet
+        $product = $client->request('GET', $iri)->toArray();
+
+        $client->request('PUT', $iri, [
             'headers' => [
-                'Content-Type' => 'application/merge-patch+json',
+                'Content-Type' => 'application/ld+json',
                 'Accept'       => 'application/ld+json',
             ],
             'json' => [
-                'price' => '1699.90',
+                'name'              => $product['name'],
+                'description'       => $product['description'],
+                'price'             => '1699.90', // changement ici
+                'brand'             => $product['brand'],
+                'imageUrl'          => $product['imageUrl'],
+                'color'             => $product['color'],
+                'storageCapacity'   => $product['storageCapacity'],
+                'ram'               => $product['ram'],
+                'screenSize'        => $product['screenSize'],
+                'cameraResolution'  => $product['cameraResolution'],
+                'operatingSystem'   => $product['operatingSystem'],
+                'batteryCapacity'   => $product['batteryCapacity'],
             ],
         ]);
         $this->assertResponseStatusCodeSame(200);

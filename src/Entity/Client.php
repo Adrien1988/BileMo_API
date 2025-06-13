@@ -11,9 +11,11 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\ClientRepository;
+use App\State\ClientUsersProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -31,12 +33,32 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Get(security: "is_granted('ROLE_SUPER_ADMIN')"),
         new GetCollection(security: "is_granted('ROLE_SUPER_ADMIN')"),
         new Post(security: "is_granted('ROLE_SUPER_ADMIN')"),
-        new Patch(security: "is_granted('ROLE_SUPER_ADMIN')"),
+        new Put(security: "is_granted('ROLE_SUPER_ADMIN')"),
         new Delete(security: "is_granted('ROLE_SUPER_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['client:read']],
     denormalizationContext: ['groups' => ['client:write']],
     validationContext: ['groups' => ['Default', 'client:write']]
+)]
+#[ApiResource(
+    uriTemplate: '/clients/{id}/users',
+    uriVariables: [
+        'id' => new Link(fromClass: Client::class, fromProperty: 'users'),
+    ],
+    operations: [
+        new GetCollection(
+            provider: ClientUsersProvider::class,
+            security: "
+            is_granted('ROLE_SUPER_ADMIN') or (
+            is_granted('ROLE_ADMIN') 
+            and user.getClient() != null
+            and user.getClient().getId() == request.attributes.get('id')
+            )
+            ",
+            filters: []
+        ),
+    ],
+    normalizationContext: ['groups' => ['user:read']]
 )]
 #[ApiFilter(SearchFilter::class, properties: [
     'name'     => 'ipartial',
