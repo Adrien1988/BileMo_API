@@ -2,14 +2,14 @@
 
 namespace App\State;
 
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProcessorInterface;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use ApiPlatform\Metadata\Operation;
 use Doctrine\ORM\EntityManagerInterface;
-use ApiPlatform\State\ProcessorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
@@ -24,7 +24,9 @@ class UserCreationProcessor implements ProcessorInterface
         private readonly Security $security,
         private readonly UserRepository $userRepository,
         private readonly UserPasswordHasherInterface $passwordHasher,
-    ) {}
+    ) {
+
+    }
 
 
     /**
@@ -39,7 +41,7 @@ class UserCreationProcessor implements ProcessorInterface
         $currentUser = $this->security->getUser();
 
         if (!$currentUser instanceof User) {
-            throw new \LogicException('Unexpected user class: ' . \get_class($currentUser));
+            throw new \LogicException('Unexpected user class: '.\get_class($currentUser));
         }
 
         $isAdmin = \in_array('ROLE_ADMIN', $currentUser->getRoles(), true);
@@ -86,5 +88,8 @@ class UserCreationProcessor implements ProcessorInterface
         $this->em->flush();
 
         return $data;
+
     }
+
+
 }

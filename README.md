@@ -8,20 +8,66 @@ REST catalog powered by **Symfony 6.4** & **API Platform**
 
 ---
 
-## 1 ▪ Installation rapide
+## 🚀 Installation locale du projet
 
+### ⚙️ Prérequis
+
+# Assurez-vous d’avoir installé localement :
+
+# - PHP >= 8.1
+# - Composer 2.x
+# - Symfony CLI
+# - MySQL (ou MariaDB)
+# - OpenSSL (pour JWT)
+# - Git
+
+# 🚀 Installation pas-à-pas :
+
+# 1. Cloner le dépôt
 ```bash
 git clone https://github.com/Adrien1988/BileMo_API.git
 cd BileMo_API
+```
+
+# 2. Installer les dépendances PHP via Composer
+```bash
 composer install
+```
+
+# 3. Copier le fichier .env et le personnaliser si nécessaire
+```bash
 cp .env .env.local
+```
+
+# ➤ Modifier dans .env.local si besoin :
+# DATABASE_URL="mysql://root@127.0.0.1:3306/bilemo?serverVersion=8.0"
+# JWT_PASSPHRASE="votre-passphrase"
+
+# 4. Créer la base de données
+```bash
 php bin/console doctrine:database:create
+```
+
+# 5. Appliquer les migrations
+```bash
 php bin/console doctrine:migrations:migrate
+```
+
+# 6. Charger les données de démonstration (fixtures)
+```bash
 php bin/console doctrine:fixtures:load --no-interaction
+```
+
+# 7. Générer les clés JWT (pour dev et test)
+```bash
 mkdir -p config/jwt
 mkdir -p config/jwt_test
 php bin/console lexik:jwt:generate-keypair
 php bin/console lexik:jwt:generate-keypair --env=test
+```
+
+# 8. Démarrer le serveur Symfony en arrière-plan
+```bash
 symfony server:start -d
 ```
 
@@ -33,6 +79,13 @@ symfony server:start -d
 * **Spécification OpenAPI (JSON)** : [http://localhost:8000/api/docs.jsonopenapi](http://localhost:8000/api/docs.jsonopenapi)
 
 ---
+
+# 👤 Profils de test disponibles (adresse mail / mot de passe) :
+
+# SuperAdmin → superadmin@example.com / supersecret       (aucun client associé)
+# Admin      → admin@acme.com       / adminsecret         (client ID = 79)
+# User API   → api@example.com      / secret              (client ID = 79)
+
 
 ## 3 ▪ Architecture : diagrammes
 

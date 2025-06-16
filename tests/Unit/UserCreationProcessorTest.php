@@ -22,8 +22,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 final class UserCreationProcessorTest extends TestCase
 {
+
+
     /**
      * @param Security&MockObject $security
+     *
      * @phpstan-param Security&MockObject $security
      */
     private function getProcessor(Security $security): UserCreationProcessor
@@ -41,7 +44,9 @@ final class UserCreationProcessorTest extends TestCase
         $passwordHasher = $this->createMock(UserPasswordHasherInterface::class);
 
         return new UserCreationProcessor($em, $security, $userRepo, $passwordHasher);
+
     }
+
 
     public function testThrowsLogicExceptionWhenUserIsNotEntity(): void
     {
@@ -56,7 +61,9 @@ final class UserCreationProcessorTest extends TestCase
 
         $this->expectException(\LogicException::class);
         $processor->process(new User(), new Post());
+
     }
+
 
     public function testThrowsAccessDeniedWhenUserHasNoAdminRole(): void
     {
@@ -75,5 +82,8 @@ final class UserCreationProcessorTest extends TestCase
 
         $this->expectException(AccessDeniedHttpException::class);
         $processor->process(new User(), new Post());
+
     }
+
+
 }
