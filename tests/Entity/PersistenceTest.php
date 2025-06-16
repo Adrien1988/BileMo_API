@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PersistenceTest extends KernelTestCase
 {
+
     private static EntityManagerInterface $em;
 
 
@@ -55,7 +56,6 @@ class PersistenceTest extends KernelTestCase
             ->setContactEmail('contact@acme.example')
             ->setContactPhone('+33123456789')
             ->setAddress("1 rue de la Paix\n75002 Paris")
-            // contractStart is nullable, we leave it null on purpose
         ;
 
         /* -------------------- Product ------------------- */

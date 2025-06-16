@@ -13,6 +13,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class UserFixtures extends Fixture implements DependentFixtureInterface
 {
+
     public const REF_API_USER = 'api-user';
     public const REF_OTHER_CLIENT_USER = 'other-client-user';
 
@@ -29,10 +30,9 @@ final class UserFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
 
         // @var Client $client
-
         $client = $this->getReference(ClientFixtures::REF_PRIMARY_CLIENT, Client::class);
-        // @var Client $otherClient
 
+        // @var Client $otherClient
         $otherClient = $this->getReference(ClientFixtures::REF_OTHER_CLIENT, Client::class);
 
         // ----- SUPER ADMIN -----

@@ -77,7 +77,7 @@ class ProductAdminResourceTest extends ApiTestCase
             'json' => [
                 'name'              => $product['name'],
                 'description'       => $product['description'],
-                'price'             => '1699.90', // changement ici
+                'price'             => '1699.90',
                 'brand'             => $product['brand'],
                 'imageUrl'          => $product['imageUrl'],
                 'color'             => $product['color'],

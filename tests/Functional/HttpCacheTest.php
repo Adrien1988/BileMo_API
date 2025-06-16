@@ -58,7 +58,7 @@ final class HttpCacheTest extends ApiTestCase
             'json'    => [
                 'name'              => $product['name'],
                 'description'       => $product['description'],
-                'price'             => '1234.00', // on modifie ici
+                'price'             => '1234.00',
                 'brand'             => $product['brand'],
                 'imageUrl'          => $product['imageUrl'],
                 'color'             => $product['color'],

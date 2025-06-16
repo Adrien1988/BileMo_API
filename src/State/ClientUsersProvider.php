@@ -25,7 +25,7 @@ final class ClientUsersProvider implements ProviderInterface
         // On récupère l'ID du client dans l'URL
         $clientId = $uriVariables['id'] ?? null;
 
-        if (null === $clientId) {
+        if ($clientId === null) {
             throw new \InvalidArgumentException('Client ID is required.');
         }
 

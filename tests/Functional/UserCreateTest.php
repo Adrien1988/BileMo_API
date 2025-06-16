@@ -101,7 +101,6 @@ final class UserCreateTest extends ApiTestCase
                 'firstName' => 'Sam',
                 'lastName'  => 'SansClient',
                 'role'      => 'ROLE_USER',
-                // pas de champ "client"
             ],
         ]);
 
