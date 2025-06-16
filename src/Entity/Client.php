@@ -48,13 +48,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new GetCollection(
             provider: ClientUsersProvider::class,
-            security: "
-            is_granted('ROLE_SUPER_ADMIN') or (
-            is_granted('ROLE_ADMIN') 
-            and user.getClient() != null
-            and user.getClient().getId() == request.attributes.get('id')
-            )
-            ",
+            security: "is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMIN')",
             filters: []
         ),
     ],
