@@ -14,6 +14,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -21,11 +22,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 final class UserCreationProcessorTest extends TestCase
 {
-
-
     /**
      * @param Security&MockObject $security
-     *
      * @phpstan-param Security&MockObject $security
      */
     private function getProcessor(Security $security): UserCreationProcessor
@@ -39,10 +37,11 @@ final class UserCreationProcessorTest extends TestCase
         $userRepo = $this->createMock(UserRepository::class);
         $userRepo->method('findOneBy')->willReturn(null);
 
-        return new UserCreationProcessor($em, $security, $userRepo);
+        /** @var UserPasswordHasherInterface&MockObject $passwordHasher */
+        $passwordHasher = $this->createMock(UserPasswordHasherInterface::class);
 
+        return new UserCreationProcessor($em, $security, $userRepo, $passwordHasher);
     }
-
 
     public function testThrowsLogicExceptionWhenUserIsNotEntity(): void
     {
@@ -57,9 +56,7 @@ final class UserCreationProcessorTest extends TestCase
 
         $this->expectException(\LogicException::class);
         $processor->process(new User(), new Post());
-
     }
-
 
     public function testThrowsAccessDeniedWhenUserHasNoAdminRole(): void
     {
@@ -78,8 +75,5 @@ final class UserCreationProcessorTest extends TestCase
 
         $this->expectException(AccessDeniedHttpException::class);
         $processor->process(new User(), new Post());
-
     }
-
-
 }
