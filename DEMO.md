@@ -5,8 +5,8 @@ Ces commandes doivent être exécutées après avoir installé le projet et lanc
 ## Profils de test
 
 - SuperAdmin → superadmin@example.com / supersecret (pas de client)
-- Admin → admin@acme.com / adminsecret (Client 79)
-- User API → api@example.com / secret (Client 79)
+- Admin → admin@acme.com / adminsecret (Client 90)
+- User API → api@example.com / secret (Client 90)
 
 👉 Remarque : avant chaque test, bien penser à générer un token JWT avec le bon utilisateur.
 

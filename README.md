@@ -96,8 +96,8 @@ L’API utilise toujours le client lié à l’utilisateur connecté via JWT.
 # 👤 Profils de test disponibles (adresse mail / mot de passe) :
 
 # SuperAdmin → superadmin@example.com / supersecret       (aucun client associé)
-# Admin      → admin@acme.com       / adminsecret         (client ID = 79)
-# User API   → api@example.com      / secret              (client ID = 79)
+# Admin      → admin@acme.com       / adminsecret         (client ID = 90)
+# User API   → api@example.com      / secret              (client ID = 90)
 
 
 ## 3 ▪ Architecture : diagrammes
