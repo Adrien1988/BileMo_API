@@ -78,6 +78,19 @@ symfony server:start -d
 
 * **Spécification OpenAPI (JSON)** : [http://localhost:8000/api/docs.jsonopenapi](http://localhost:8000/api/docs.jsonopenapi)
 
+🔐 Accès à /api/clients/{id}/users (utilisateurs d’un client)
+Cette route permet de consulter les utilisateurs rattachés à un client BileMo.
+
+ROLE_SUPER_ADMIN :
+Doit fournir un id client dans l’URL (ex. : /api/clients/1/users) pour accéder aux utilisateurs d’un client donné.
+
+ROLE_ADMIN :
+Le clientId passé dans l’URL est techniquement requis, mais il est automatiquement ignoré côté serveur.
+L’API utilise toujours le client lié à l’utilisateur connecté via JWT.
+➤ Exemple : un admin rattaché au client 79 peut faire GET /api/clients/999/users, mais ne verra que les utilisateurs du client 79.
+
+🛑 Si un ROLE_ADMIN essaie d’accéder aux utilisateurs d’un autre client que celui auquel il est rattaché, l’API retourne un 403 Forbidden.
+
 ---
 
 # 👤 Profils de test disponibles (adresse mail / mot de passe) :
